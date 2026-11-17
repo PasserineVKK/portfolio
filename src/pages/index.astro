@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Passerine | Choose a profile"
+  description="Choose which side of Passerine you would like to meet."
+>
+  <main
+    id="top"
+    class="flex min-h-dvh flex-col justify-between overflow-hidden bg-intro-bg px-5 py-7 text-intro-ink sm:px-10 lg:px-16"
+    aria-labelledby="intro-title"
+  >
+    <div class="flex items-center justify-between border-b border-intro-line pb-4 font-oswald text-sm uppercase tracking-[.18em]">
+      <span>Passerine</span>
+      <span>01 / 04</span>
+    </div>
+    <div class="mx-auto flex w-full max-w-[1500px] flex-1 flex-col justify-center py-12">
+      <h1
+        id="intro-title"
+        class="intro-title max-w-[13ch] font-oswald font-bold"
+      >
+        Hi, I’m
+        <br />
+        Passerine
+      </h1>
+      <p class="mt-8 font-oswald text-2xl font-medium sm:mt-12 sm:text-4xl">
+        Which me would you like to meet?
+      </p>
+      <nav
+        class="mt-9 grid gap-3 sm:mt-12 sm:grid-cols-2 lg:grid-cols-[1.15fr_1fr_1fr_.95fr]"
+        aria-label="Choose a profile"
+      >
+        <a
+          class="flex min-h-28 items-end border border-intro-ink bg-intro-ink p-5 font-oswald text-xl text-intro-bg transition-transform hover:-translate-y-1 sm:min-h-36 sm:text-2xl"
+          href="/intern/"
+        >
+          <span>
+            <small class="mb-3 block text-sm">01</small>The Intern
+          </span>
+        </a>
+        <a
+          class="flex min-h-28 items-end border border-intro-ink bg-intro-bg p-5 font-oswald text-xl transition-colors hover:bg-intro-ink hover:text-intro-bg sm:min-h-36 sm:text-2xl"
+          href="/learner/"
+        >
+          <span>
+            <small class="mb-3 block text-sm">02</small>The Learner
+          </span>
+        </a>
+        <a
+          class="flex min-h-28 items-end border border-intro-ink bg-intro-bg p-5 font-oswald text-xl transition-colors hover:bg-intro-ink hover:text-intro-bg sm:min-h-36 sm:text-2xl"
+          href="/daily-me/"
+        >
+          <span>
+            <small class="mb-3 block text-sm">03</small>The Daily Me
+          </span>
+        </a>
+        <a
+          class="persona-anxious mt-5 flex min-h-28 items-end border border-intro-anxious bg-intro-anxious p-5 font-oswald text-xl text-intro-on-anxious transition-transform sm:col-start-2 sm:mt-8 sm:min-h-36 sm:text-2xl lg:col-start-auto lg:ml-10 lg:mt-0"
+          href="/anxious-me/"
+        >
+          <span>
+            <small class="mb-3 block text-sm">04</small>Anxious Me
+          </span>
+        </a>
+      </nav>
+    </div>
+    <div class="border-t border-intro-line pt-4 font-oswald text-xs uppercase tracking-[.16em] text-intro-soft">
+      Choose a page to continue
+    </div>
+  </main>
+  <script>
+    document
+      .querySelectorAll('nav[aria-label="Choose a profile"] a')
+      .forEach((link) => {
+        link.addEventListener('click', (event) => {
+          if (
+            event instanceof MouseEvent &&
+            (event.metaKey ||
+              event.ctrlKey ||
+              event.shiftKey ||
+              event.altKey ||
+              event.button !== 0)
+          )
+            return;
+          event.preventDefault();
+          window.location.replace((link as HTMLAnchorElement).href);
+        });
+      });
+  </script>
+</Layout>

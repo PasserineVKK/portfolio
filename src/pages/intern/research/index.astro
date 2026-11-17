@@ -1,0 +1,47 @@
+---
+import InternPageLayout from '../../../layouts/InternPageLayout.astro';
+import { portfolio, research } from '../../../data/portfolio';
+---
+
+<InternPageLayout
+  title={`Research | ${portfolio.alias} — ${portfolio.name}`}
+  description={research.summary}
+>
+  <article class="mx-auto max-w-5xl">
+    <p class="text-sm font-bold uppercase tracking-[.18em] text-link-text">
+      The Intern / Research
+    </p>
+    <h1 class="mt-3 font-oswald text-6xl font-bold uppercase sm:text-8xl">
+      Research
+    </h1>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[.14em] text-ink-muted">
+      {research.label}
+    </p>
+    <h2 class="mt-4 font-oswald text-3xl font-bold uppercase sm:text-5xl">
+      <a
+        href={research.paper.url}
+        target="_blank"
+        rel="noreferrer"
+        class="hover:text-link-hover"
+      >
+        {research.title}
+      </a>
+    </h2>
+    <div class="mt-9 grid gap-7 border-y border-line py-8 md:grid-cols-2">
+      {research.details.map(({ heading, body }) => (
+        <section>
+          <h3 class="font-oswald text-xl font-bold uppercase">{heading}</h3>
+          <p class="mt-2 leading-8 text-body-text">{body}</p>
+        </section>
+      ))}
+    </div>
+    <a
+      href={research.paper.url}
+      target="_blank"
+      rel="noreferrer"
+      class="mt-8 inline-block font-semibold text-link-text underline underline-offset-4 hover:text-link-hover"
+    >
+      {research.paper.label}
+    </a>
+  </article>
+</InternPageLayout>

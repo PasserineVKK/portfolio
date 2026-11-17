@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../../../components/ProjectCard.astro';
+import InternPageLayout from '../../../layouts/InternPageLayout.astro';
+import { portfolio } from '../../../data/portfolio';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<InternPageLayout
+  title={`Projects | ${portfolio.alias} — ${portfolio.name}`}
+  description={`Business Analysis projects by ${portfolio.name}.`}
+>
+  <div class="mx-auto max-w-7xl">
+    <p class="text-sm font-bold uppercase tracking-[.18em] text-link-text">
+      The Intern / Projects
+    </p>
+    <h1 class="mt-3 font-oswald text-6xl font-bold uppercase sm:text-8xl">
+      Projects
+    </h1>
+    <p class="mt-5 max-w-2xl leading-8 text-body-text">
+      Selected work in requirements, process design, research and education.
+    </p>
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      {projects.map((entry) => (
+        <ProjectCard entry={entry} headingLevel={2} />
+      ))}
+    </div>
+  </div>
+</InternPageLayout>

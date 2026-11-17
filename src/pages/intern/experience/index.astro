@@ -1,0 +1,82 @@
+---
+import InternPageLayout from '../../../layouts/InternPageLayout.astro';
+import { experience, portfolio } from '../../../data/portfolio';
+---
+
+<InternPageLayout
+  title={`Experience | ${portfolio.alias} — ${portfolio.name}`}
+  description={experience.summary}
+>
+  <article class="mx-auto max-w-5xl">
+    <p class="text-sm font-bold uppercase tracking-[.18em] text-link-text">
+      The Intern / Experience
+    </p>
+    <h1 class="mt-3 font-oswald text-6xl font-bold uppercase sm:text-8xl">
+      Experience
+    </h1>
+    <p class="mt-8 text-sm font-bold uppercase tracking-[.14em] text-ink-muted">
+      <a
+        href={experience.organizationUrl}
+        target="_blank"
+        rel="noreferrer"
+        class="hover:text-link-hover"
+      >
+        {experience.organization}
+      </a>
+      {' · '}
+      {experience.period}
+    </p>
+    <h2 class="mt-4 font-oswald text-3xl font-bold uppercase sm:text-5xl">
+      <a
+        href={experience.roleUrl}
+        target="_blank"
+        rel="noreferrer"
+        class="hover:text-link-hover"
+      >
+        {experience.role}
+      </a>
+    </h2>
+    <p class="mt-4">
+      <a
+        href={experience.locationUrl}
+        target="_blank"
+        rel="noreferrer"
+        class="text-link-text hover:text-link-hover"
+      >
+        {experience.locationLabel}
+      </a>
+    </p>
+    <ul class="mt-9 list-disc space-y-4 border-y border-line py-8 pl-5 leading-8 text-body-text">
+      {experience.highlights.map((parts) => (
+        <li>
+          {parts.map(({ text, url }) =>
+            url ? (
+              <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                class="hover:text-link-hover"
+              >
+                {text}
+              </a>
+            ) : (
+              text
+            ),
+          )}
+        </li>
+      ))}
+    </ul>
+    <div class="mt-8 flex flex-wrap gap-6 font-semibold">
+      {experience.links.map(({ label, url }) => (
+        <a
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          class="text-link-text underline underline-offset-4 hover:text-link-hover"
+        >
+          {label}
+        </a>
+      ))}
+    </div>
+  </article>
+</InternPageLayout>

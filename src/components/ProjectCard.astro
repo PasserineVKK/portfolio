@@ -1,0 +1,89 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PlaceholderImage from './PlaceholderImage.astro';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+  variant?: 'featured' | 'summary';
+  actionLabel?: string;
+  headingLevel?: 2 | 3;
+}
+
+const {
+  entry,
+  variant = 'summary',
+  actionLabel = 'Read case',
+  headingLevel = 3,
+} = Astro.props;
+const { id, data } = entry;
+---
+
+<article
+  class:list={[
+    'flex h-full flex-col border border-line',
+    variant === 'featured' ? 'bg-surface p-4 sm:p-5' : 'bg-bg p-6 sm:p-8',
+  ]}
+>
+  {variant === 'featured' ? (
+    <>
+      <!-- TODO: Replace this white placeholder with the project's real diagram or wireframe. -->
+      <PlaceholderImage
+        alt={`White placeholder for the ${data.title} diagram or wireframe`}
+        label="DIAGRAM / WIREFRAME"
+        class="aspect-[16/10]"
+      />
+    </>
+  ) : (
+    <p class="text-xs font-bold uppercase tracking-[.12em] text-ink-muted">
+      {data.role} · {data.status} · {data.year}
+    </p>
+  )}
+
+  <div
+    class:list={[
+      'flex flex-1 flex-col',
+      variant === 'featured' ? 'pt-5' : 'pt-4',
+    ]}
+  >
+    {headingLevel === 2 ? (
+      <h2 class="font-oswald text-3xl font-bold uppercase">
+        {data.titleUrl ? (
+          <a
+            href={data.titleUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="hover:text-link-hover"
+          >
+            {data.title}
+          </a>
+        ) : (
+          data.title
+        )}
+      </h2>
+    ) : (
+      <h3 class="font-oswald text-3xl font-bold uppercase">
+        {data.titleUrl ? (
+          <a
+            href={data.titleUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="hover:text-link-hover"
+          >
+            {data.title}
+          </a>
+        ) : (
+          data.title
+        )}
+      </h3>
+    )}
+    <p class="mt-3 flex-1 text-sm leading-7 text-body-text">
+      {variant === 'featured' ? data.subtitle : data.result}
+    </p>
+    <a
+      href={`/intern/projects/${id}/`}
+      class="mt-6 w-fit font-semibold text-link-text underline underline-offset-4 hover:text-link-hover"
+    >
+      {actionLabel}
+    </a>
+  </div>
+</article>

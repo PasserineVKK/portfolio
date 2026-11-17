@@ -1,0 +1,339 @@
+---
+import { getCollection } from 'astro:content';
+import Footer from '../../components/Footer.astro';
+import InternHeader from '../../components/InternHeader.astro';
+import PlaceholderImage from '../../components/PlaceholderImage.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Layout from '../../layouts/Layout.astro';
+import { portfolio as data, research, experience } from '../../data/portfolio';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const featured = projects.filter((entry) => entry.data.featured);
+---
+
+<Layout
+  title={`The Intern | ${data.alias} — ${data.name}`}
+  description={`${data.name} is a ${data.role} focused on requirements, process modeling and useful prototypes.`}
+>
+  <div id="top"></div>
+  <InternHeader />
+
+  <main>
+    <section
+      id="about"
+      class="bg-primary px-4 py-16 text-on-primary sm:px-6 sm:py-24"
+      aria-labelledby="hero-title"
+    >
+      <div class="mx-auto max-w-7xl">
+        <p class="mb-5 font-oswald text-xl font-medium uppercase tracking-[.16em] sm:text-2xl">
+          {data.alias} <span aria-hidden="true">/</span> {data.role}
+        </p>
+        <h1
+          id="hero-title"
+          class="whitespace-nowrap font-oswald text-[clamp(1.6rem,7.5vw,7.5rem)] font-bold uppercase leading-none tracking-tight"
+        >
+          {data.name}
+        </h1>
+        <div class="mt-9 grid gap-7 border-t border-on-primary/50 pt-7 lg:grid-cols-[1fr_2fr] lg:gap-12">
+          <p class="text-sm font-semibold uppercase tracking-[.16em]">
+            {data.location}
+            <br />
+            {data.school}
+          </p>
+          <div>
+            <p class="max-w-3xl text-base leading-8 sm:text-lg">
+              {data.summary}
+            </p>
+            <a
+              href="#featured"
+              class="mt-8 inline-flex min-h-12 items-center bg-hero-btn px-6 font-semibold text-on-hero-btn underline underline-offset-4 transition-transform hover:-translate-y-1"
+            >
+              Explore selected work
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="featured"
+      class="bg-bg px-4 py-18 sm:px-6 sm:py-24"
+      aria-labelledby="featured-title"
+    >
+      <div class="reveal mx-auto max-w-7xl">
+        <SectionHeading
+          id="featured-title"
+          eyebrow="01 / Selected work"
+          title="Featured Work"
+        />
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          {featured.map((entry) => (
+            <ProjectCard
+              entry={entry}
+              variant="featured"
+              actionLabel="View case"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="glance"
+      class="bg-surface px-4 py-16 sm:px-6 sm:py-20"
+      aria-labelledby="glance-title"
+    >
+      <div class="reveal mx-auto max-w-7xl">
+        <SectionHeading id="glance-title" title="At a Glance" />
+        <div class="mt-10 grid grid-cols-2 gap-px border border-line bg-line lg:grid-cols-4">
+          {data.metrics.map(({ value, label }) => (
+            <div class="bg-bg p-5 sm:p-7">
+              <p class="font-oswald text-4xl font-bold uppercase leading-none sm:text-5xl">
+                {value}
+              </p>
+              <p class="mt-4 text-sm leading-6 text-ink-muted">{label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="what-i-do"
+      class="bg-bg px-4 py-18 sm:px-6 sm:py-24"
+      aria-labelledby="what-title"
+    >
+      <div class="reveal mx-auto max-w-7xl">
+        <SectionHeading
+          id="what-title"
+          eyebrow="02 / Approach"
+          title="What I Do"
+        />
+        <div
+          class="mt-8 flex flex-wrap gap-2"
+          role="tablist"
+          aria-label="Business analysis capabilities"
+        >
+          {data.capabilities.map((item, index) => (
+            <button
+              id={`tab-${item.id}`}
+              type="button"
+              role="tab"
+              aria-selected={index === 0 ? 'true' : 'false'}
+              aria-controls={`panel-${item.id}`}
+              tabindex={index === 0 ? 0 : -1}
+              data-capability-tab={item.id}
+              class="min-h-12 border border-ink px-5 font-oswald text-lg uppercase transition-colors aria-selected:bg-ink aria-selected:text-bg hover:bg-surface"
+            >
+              {item.title}
+            </button>
+          ))}
+        </div>
+        <div class="mt-7">
+          {data.capabilities.map((item, index) => (
+            <div
+              id={`panel-${item.id}`}
+              role="tabpanel"
+              aria-labelledby={`tab-${item.id}`}
+              data-capability-panel={item.id}
+              hidden={index !== 0}
+              class="grid gap-7 bg-surface p-5 md:grid-cols-2 md:gap-10 md:p-8"
+            >
+              <!-- TODO: Replace this white placeholder with a process diagram or annotated wireframe. -->
+              <PlaceholderImage
+                alt={`White placeholder for a ${item.title.toLowerCase()} process diagram or wireframe`}
+                label={`${item.title.toUpperCase()} VISUAL`}
+                class="aspect-[16/10]"
+              />
+              <div class="flex flex-col justify-center">
+                <h3 class="font-oswald text-3xl font-bold uppercase sm:text-4xl">
+                  {item.title}
+                </h3>
+                <p class="mt-4 max-w-prose leading-8 text-body-text">
+                  {item.description}
+                </p>
+                <p class="mt-6 border-t border-line pt-5 text-sm font-semibold leading-7 text-body-text">
+                  {item.skills}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="projects"
+      class="bg-surface px-4 py-18 sm:px-6 sm:py-24"
+      aria-labelledby="projects-title"
+    >
+      <div class="reveal mx-auto max-w-7xl">
+        <SectionHeading
+          id="projects-title"
+          eyebrow="03 / Case studies"
+          title="Projects"
+        />
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          {projects.map((entry) => (
+            <ProjectCard entry={entry} />
+          ))}
+        </div>
+        <a
+          href="/intern/projects/"
+          class="mt-8 inline-block font-semibold text-link-text underline underline-offset-4 hover:text-link-hover"
+        >
+          All projects
+        </a>
+      </div>
+    </section>
+
+    <section
+      id="research"
+      class="bg-bg px-4 py-18 sm:px-6 sm:py-24"
+      aria-labelledby="research-title"
+    >
+      <div class="reveal mx-auto grid max-w-7xl gap-8 lg:grid-cols-[.7fr_1.3fr]">
+        <SectionHeading id="research-title" title="Research" />
+        <div class="border-l-4 border-primary pl-6">
+          <p class="text-xs font-bold uppercase tracking-[.15em] text-ink-muted">
+            {research.label}
+          </p>
+          <h3 class="mt-3 font-oswald text-3xl font-bold uppercase">
+            {research.title}
+          </h3>
+          <p class="mt-4 leading-8 text-body-text">{research.summary}</p>
+          <a
+            href="/intern/research/"
+            class="mt-5 inline-block font-semibold text-link-text underline underline-offset-4 hover:text-link-hover"
+          >
+            Read research
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="experience"
+      class="bg-surface px-4 py-18 sm:px-6 sm:py-24"
+      aria-labelledby="experience-title"
+    >
+      <div class="reveal mx-auto grid max-w-7xl gap-8 lg:grid-cols-[.7fr_1.3fr]">
+        <SectionHeading id="experience-title" title="Experience" />
+        <div class="border-l-4 border-primary pl-6">
+          <p class="text-xs font-bold uppercase tracking-[.15em] text-ink-muted">
+            {experience.organization} · {experience.period}
+          </p>
+          <h3 class="mt-3 font-oswald text-3xl font-bold uppercase">
+            {experience.role}
+          </h3>
+          <p class="mt-4 leading-8 text-body-text">{experience.summary}</p>
+          <a
+            href="/intern/experience/"
+            class="mt-5 inline-block font-semibold text-link-text underline underline-offset-4 hover:text-link-hover"
+          >
+            Read experience
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="education"
+      class="bg-bg px-4 py-18 sm:px-6 sm:py-24"
+      aria-labelledby="education-title"
+    >
+      <div class="reveal mx-auto max-w-7xl">
+        <SectionHeading id="education-title" title="Education & Skills" />
+        <div class="mt-10 grid gap-8 lg:grid-cols-[.9fr_1.1fr]">
+          <div class="bg-surface p-6 sm:p-8">
+            <h3 class="font-oswald text-3xl font-bold uppercase">
+              {data.education.institution}
+            </h3>
+            <p class="mt-2 font-semibold">
+              {data.education.degree} · {data.education.period}
+            </p>
+            <p class="mt-5 leading-8 text-body-text">
+              {data.education.scholarship}. {data.education.distinction}. GPA{' '}
+              {data.education.gpa}.
+            </p>
+            <h4 class="mt-6 font-bold uppercase">Relevant coursework</h4>
+            <p class="mt-2 leading-8 text-body-text">
+              {data.education.coursework.join(', ')}.
+            </p>
+          </div>
+          <div class="grid gap-px border border-line bg-line sm:grid-cols-2">
+            {data.skills.map(({ name, detail }) => (
+              <div class="bg-bg p-5">
+                <h3 class="font-oswald text-xl font-bold uppercase">{name}</h3>
+                <p class="mt-2 text-sm leading-7 text-body-text">{detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="bg-surface px-4 py-16 sm:px-6 sm:py-20"
+      aria-labelledby="learning-title"
+    >
+      <div class="reveal mx-auto max-w-7xl">
+        <h2
+          id="learning-title"
+          class="font-oswald text-3xl font-bold uppercase"
+        >
+          Key Learning
+        </h2>
+        <blockquote class="mt-6 max-w-5xl border-l-4 border-primary pl-6 font-oswald text-2xl leading-snug sm:text-4xl">
+          “{data.learningQuote}”
+        </blockquote>
+        <p class="mt-5 pl-7 text-sm text-ink-muted">
+          From the PEGAXUS project learning notes
+        </p>
+      </div>
+    </section>
+
+    <section
+      id="contact"
+      class="bg-primary px-4 py-18 text-on-primary sm:px-6 sm:py-24"
+      aria-labelledby="contact-title"
+    >
+      <div class="reveal mx-auto max-w-7xl">
+        <p class="mb-3 text-sm font-bold uppercase tracking-[.2em]">
+          Let’s connect
+        </p>
+        <h2
+          id="contact-title"
+          class="max-w-4xl font-oswald text-5xl font-bold uppercase leading-tight sm:text-7xl"
+        >
+          {data.contact.heading}
+        </h2>
+        <p class="mt-5 max-w-2xl text-lg leading-8">{data.contact.message}</p>
+        <div class="mt-9 flex flex-wrap gap-5">
+          <a
+            class="inline-flex min-h-12 items-center bg-hero-btn px-6 font-bold text-on-hero-btn underline underline-offset-4 transition-transform hover:-translate-y-1"
+            href={`mailto:${data.email}`}
+          >
+            Email me
+          </a>
+          <a
+            class="inline-flex min-h-12 items-center border border-on-primary px-6 font-bold text-on-primary underline underline-offset-4 transition-colors hover:bg-hero-btn hover:text-on-hero-btn"
+            href={data.github}
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <script>
+    import '../../scripts/main.js';
+  </script>
+</Layout>

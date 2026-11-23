@@ -9,6 +9,7 @@
 .case-topline { border-bottom: 1px solid color-mix(in srgb, var(--on-dark) 28%, transparent); padding-bottom: 1.25rem; }
 .case-back { width: fit-content; border-bottom: 1px solid transparent; transition: border-color 180ms ease; }
 .case-back:hover { border-color: currentColor; }
+.case-hero a:focus-visible { outline-color: var(--on-dark); }
 .case-hero-grid { display: grid; flex: 1; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: center; gap: clamp(2.5rem, 5vw, 6rem); padding-block: 3rem; }
 .case-hero-copy { align-self: center; }
 .case-kicker { margin: 0 0 1.3rem; color: var(--accent); }
@@ -71,6 +72,7 @@
 .case-resources > div { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; }
 .case-resources a { display: inline-flex; gap: 1rem; border-bottom: 1px solid var(--ink); padding-bottom: .4rem; font-size: .88rem; font-weight: 700; transition: gap 180ms var(--ease-out); }
 .case-resources a:hover { gap: 1.5rem; }
+.case-resources a:focus-visible, .case-next:focus-visible { outline-color: var(--primary); }
 .case-next { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1rem; margin-top: clamp(6rem, 9vw, 10rem); border-top: 1px solid var(--ink); padding-top: 1.5rem; }
 .case-next > span:first-child { grid-column: 1 / -1; }
 .case-next strong { font-size: clamp(4.5rem, 10vw, 12rem); line-height: .95; letter-spacing: -.05em; transition: transform 250ms var(--ease-out); }

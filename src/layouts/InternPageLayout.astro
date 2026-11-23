@@ -7,9 +7,10 @@ interface Props {
   title: string;
   description: string;
   surface?: boolean;
+  fullBleed?: boolean;
 }
 
-const { title, description, surface = false } = Astro.props;
+const { title, description, surface = false, fullBleed = false } = Astro.props;
 ---
 
 <Layout title={title} description={description}>
@@ -17,7 +18,7 @@ const { title, description, surface = false } = Astro.props;
   <InternHeader />
   <main id="main"
     class:list={[
-      'detail-main',
+      !fullBleed && 'detail-main',
       surface ? 'bg-surface' : 'bg-bg',
     ]}
   >

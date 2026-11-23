@@ -3,10 +3,11 @@ import { getCollection } from 'astro:content';
 import ProjectCard from '../../../components/ProjectCard.astro';
 import InternPageLayout from '../../../layouts/InternPageLayout.astro';
 import { portfolio } from '../../../data/portfolio';
+import { internProjectIds } from '../../../data/internFolio';
 
-const projects = (await getCollection('projects')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const projects = (await getCollection('projects'))
+  .filter((entry) => internProjectIds.includes(entry.id))
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <InternPageLayout
@@ -21,7 +22,7 @@ const projects = (await getCollection('projects')).sort(
       Projects
     </h1>
     <p class="mt-5 max-w-2xl leading-8 text-body-text">
-      Selected work in requirements, process design, research and education.
+      Selected work in requirements, process design and prototyping.
     </p>
     <div class="mt-10 grid gap-5 md:grid-cols-2">
       {projects.map((entry) => (

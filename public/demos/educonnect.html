@@ -1,0 +1,456 @@
+<!DOCTYPE html><html class="h-full" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Attendance Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#626566",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "on-surface": "#141d23",
+                        "on-primary-fixed": "#001551",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#ecf5fe",
+                        "on-tertiary-fixed": "#3c0800",
+                        "on-primary": "#ffffff",
+                        "background": "#f6faff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#454748",
+                        "on-surface-variant": "#444652",
+                        "primary-container": "#002b8f",
+                        "surface-container-highest": "#dbe4ed",
+                        "on-secondary-fixed": "#191c1d",
+                        "secondary": "#5c5f60",
+                        "outline": "#757684",
+                        "on-tertiary-fixed-variant": "#82270f",
+                        "secondary-container": "#e1e3e4",
+                        "surface-bright": "#f6faff",
+                        "outline-variant": "#c5c5d4",
+                        "surface-dim": "#d2dbe4",
+                        "on-tertiary-container": "#f57d5d",
+                        "surface-container-high": "#e0e9f2",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#7f99ff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb4a1",
+                        "surface": "#f6faff",
+                        "on-primary-fixed-variant": "#1e3ea0",
+                        "surface-tint": "#3b57b9",
+                        "surface-container": "#e6eff8",
+                        "tertiary-container": "#6b1701",
+                        "on-background": "#141d23",
+                        "inverse-on-surface": "#e9f2fb",
+                        "inverse-primary": "#b7c4ff",
+                        "surface-variant": "#dbe4ed",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdbd2",
+                        "inverse-surface": "#293138",
+                        "secondary-fixed": "#e1e3e4",
+                        "tertiary": "#460b00",
+                        "on-secondary": "#ffffff",
+                        "primary": "#00195e",
+                        "secondary-fixed-dim": "#c5c7c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "list-item-padding": "12px 16px",
+                        "stack-gap": "16px",
+                        "gutter-mobile": "12px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+  /* The portfolio preview shows the entire desktop UI inside a scaled, scroll-free frame. */
+  html.folio-preview, html.folio-preview body, html.folio-preview main, html.folio-preview main > .flex-1 { overflow: hidden !important; }
+  html.folio-preview .absolute.z-40 { display: none !important; }
+  html.folio-preview main > header { height: 42px; }
+  html.folio-preview main > .flex-1 { padding: 12px 16px !important; }
+  html.folio-preview .max-w-7xl { padding-bottom: 0 !important; }
+  html.folio-preview .max-w-7xl > * { margin-top: 8px !important; }
+  html.folio-preview .max-w-7xl > :first-child { margin-top: 0 !important; }
+  html.folio-preview .max-w-7xl > .grid { gap: 8px; padding: 10px !important; }
+  html.folio-preview .max-w-7xl > .grid select, html.folio-preview .max-w-7xl > .grid button { padding: 6px !important; }
+  html.folio-preview table th, html.folio-preview table td { padding: 4px 10px !important; }
+  html.folio-preview table tbody td:first-child .rounded-full { width: 28px; height: 28px; font-size: 14px; }
+  html.folio-preview table tbody td input[type='text'] { padding: 4px !important; }
+  html.folio-preview table tbody tr { height: 36px; }
+  html.folio-preview .fixed.bottom-0 { height: 38px; padding: 5px 16px !important; }
+  html.folio-preview .fixed.bottom-0 button { padding: 4px 12px !important; }
+  html.folio-preview aside { padding-top: 12px !important; padding-bottom: 12px !important; }
+  html.folio-preview aside nav { overflow: hidden !important; }
+  html.folio-preview aside nav a { height: 31px; padding-top: 3px !important; padding-bottom: 3px !important; }
+  html.folio-preview aside .mb-6 { margin-bottom: 8px !important; }
+</style>
+<script>if (new URLSearchParams(location.search).has('preview')) document.documentElement.classList.add('folio-preview');</script>
+</head>
+<body class="bg-background text-on-surface h-full flex overflow-hidden">
+<!-- SideNavBar -->
+<aside class="flex flex-col h-full py-6 space-y-2 border-r border-outline-variant bg-surface-container-low dark:bg-inverse-surface w-64 fixed left-0 top-0 z-30">
+<div class="px-6 mb-6">
+<div class="flex items-center space-x-3 mb-2">
+<div class="w-10 h-10 bg-primary-container flex items-center justify-center text-on-primary-container font-headline-md rounded-lg">
+                    MA
+                </div>
+<div>
+<h1 class="text-headline-md font-headline-md text-primary dark:text-primary-fixed-dim leading-none">EduConnect</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">Faculty Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto px-4 space-y-1">
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-label-md font-label-md">Students</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="text-label-md font-label-md">Teachers</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="local_library">local_library</span>
+<span class="text-label-md font-label-md">Material</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="text-label-md font-label-md">Account</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="class">class</span>
+<span class="text-label-md font-label-md">Class</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="text-label-md font-label-md">Subject</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-md font-label-md">Routine</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-primary text-on-primary" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+<span class="text-label-md font-label-md">Attendance</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span class="text-label-md font-label-md">Exam</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span>
+<span class="text-label-md font-label-md">Notice</span>
+</a>
+</nav>
+<div class="px-6 mt-auto space-y-2">
+<a class="flex items-center space-x-3 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-secondary-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-label-md font-label-md">Help Center</span>
+</a>
+<a class="flex items-center space-x-3 px-4 py-2 rounded-lg text-error hover:bg-error-container transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-label-md font-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col h-full bg-surface-container-lowest overflow-hidden relative">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 w-full bg-surface-container-lowest dark:bg-surface-dim border-b border-outline-variant dark:border-outline h-16 z-20 flex-shrink-0">
+<div class="flex items-center">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 rounded-full border border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary text-body-md font-body-md text-on-surface outline-none transition-all w-80" placeholder="Search students, classes..." type="text">
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="Teacher Profile Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a teacher, well-lit, smiling softly, modern corporate style, neutral background. The lighting should be clean and bright, reflecting a modern educational environment." src="/demos/assets/teacher.jpg">
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-1 overflow-y-auto p-8 relative">
+<div class="max-w-7xl mx-auto space-y-8 pb-16">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Attendance Management</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Record and track daily student attendance</p>
+</div>
+<div class="flex items-center gap-2 text-body-md font-body-md text-primary bg-surface-container px-4 py-2 rounded-lg font-semibold">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="">Today, Oct 24, 2023</span>
+</div>
+</div>
+<!-- Filters Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-surface p-6 rounded-xl border border-outline-variant shadow-sm relative">
+<div class="flex flex-col space-y-2">
+<label class="text-label-md font-label-md text-on-surface-variant font-semibold">Select Class</label>
+<select class="w-full p-3 rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>10th Grade</option>
+<option>11th Grade</option>
+<option>12th Grade</option>
+</select>
+</div>
+<div class="flex flex-col space-y-2">
+<label class="text-label-md font-label-md text-on-surface-variant font-semibold">Select Section</label>
+<select class="w-full p-3 rounded-lg border border-outline-variant bg-surface-container-lowest text-body-md font-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>Section A</option>
+<option>Section B</option>
+<option>Section C</option>
+</select>
+</div>
+<div class="flex flex-col space-y-2 relative"><label class="text-label-md font-label-md text-transparent select-none">Action</label><button class="flex items-center justify-center gap-2 px-6 py-3 bg-secondary-container text-on-secondary-container hover:bg-surface-container-high transition-colors rounded-lg font-label-md text-label-md border border-outline-variant font-semibold"><span class="material-symbols-outlined text-[20px]">done_all</span><span class="">Mark All Present</span></button><div class="absolute z-40 -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full w-64 p-3 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-md text-label-md font-label-md text-on-surface-variant"><div class="font-semibold text-primary mb-1">Callout 4 — Bulk action</div>Reduce repetitive interaction: Teachers can mark the whole class as Present and only change students who are absent.<div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-surface-container-lowest border-b border-r border-outline-variant rotate-45"></div></div></div>
+</div>
+<!-- Attendance Table -->
+<div class="flex gap-6 text-label-md font-label-md text-on-surface-variant mb-2 px-2"><span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary"></span>P: Present</span><span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-error"></span>UA: Unexcused Absent</span><span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-on-tertiary-container"></span>EA: Excused Absent</span></div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm relative">
+<div class="overflow-visible">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="p-4 text-label-md font-label-md text-on-surface-variant font-semibold">Student</th>
+<th class="p-4 text-label-md font-label-md text-on-surface-variant font-semibold">Student ID</th>
+<th class="p-4 text-label-md font-label-md text-on-surface-variant font-semibold w-1/3 relative">Attendance Status<div class="absolute z-40 top-full mt-2 left-4 w-72 p-3 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-md text-label-md font-label-md text-on-surface-variant"><div class="font-semibold text-primary mb-1">Callout 1 — Default behavior</div>No approved leave request → Unexcused by default. The system preserves the initial attendance rule while allowing teacher intervention.<div class="absolute -top-2 left-4 w-4 h-4 bg-surface-container-lowest border-t border-l border-outline-variant rotate-45"></div></div></th>
+<th class="p-4 text-label-md font-label-md text-on-surface-variant font-semibold">Reason</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant"><!-- Row 1: Edward -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center space-x-3">
+<span aria-hidden="true" class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant font-semibold text-lg">E</span>
+<span class="text-body-md font-body-md font-semibold text-on-surface">Edward</span>
+</div>
+</td>
+<td class="p-4 text-body-md font-body-md text-on-surface-variant">#00021</td>
+<td class="p-4">
+<div class="flex items-center space-x-6">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input checked="" class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" name="att_00021" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-primary transition-colors">P</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-error border-outline-variant focus:ring-error" name="att_00021" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-error transition-colors">UA</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-on-tertiary-container border-outline-variant focus:ring-on-tertiary-container" name="att_00021" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-on-tertiary-container transition-colors">EA</span>
+</label>
+</div>
+</td>
+<td class="p-4">
+<input class="w-full p-2 text-body-md font-body-md rounded-lg border border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none opacity-50 cursor-not-allowed" disabled="" type="text">
+</td>
+</tr>
+<!-- Row 2: Smith -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center space-x-3">
+<span aria-hidden="true" class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant font-semibold text-lg">S</span>
+<span class="text-body-md font-body-md font-semibold text-on-surface">Smith</span>
+</div>
+</td>
+<td class="p-4 text-body-md font-body-md text-on-surface-variant">#00022</td>
+<td class="p-4">
+<div class="flex items-center space-x-6 relative">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input checked="" class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" name="att_00022" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-primary transition-colors">P</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-error border-outline-variant focus:ring-error" name="att_00022" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-error transition-colors">UA</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group relative">
+<input class="w-5 h-5 text-on-tertiary-container border-outline-variant focus:ring-on-tertiary-container" name="att_00022" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-on-tertiary-container transition-colors">EA</span>
+<div class="absolute z-40 left-full ml-6 top-1/2 transform -translate-y-1/2 w-64 p-3 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-md text-label-md font-label-md text-on-surface-variant cursor-auto"><div class="font-semibold text-primary mb-1">Callout 2 — Controlled correction</div>Teacher-controlled correction: Teachers can change an automatically assigned unexcused absence when they have valid absence information.<div class="absolute top-1/2 -left-2 transform -translate-y-1/2 w-4 h-4 bg-surface-container-lowest border-b border-l border-outline-variant rotate-45"></div></div></label>
+</div>
+</td>
+<td class="p-4">
+<input class="w-full p-2 text-body-md font-body-md rounded-lg border border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none opacity-50 cursor-not-allowed" disabled="" type="text">
+</td>
+</tr>
+<!-- Row 3: Clara -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center space-x-3">
+<span aria-hidden="true" class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant font-semibold text-lg">C</span>
+<span class="text-body-md font-body-md font-semibold text-on-surface">Clara</span>
+</div>
+</td>
+<td class="p-4 text-body-md font-body-md text-on-surface-variant">#00023</td>
+<td class="p-4">
+<div class="flex items-center space-x-6">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" name="att_00023" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-primary transition-colors">P</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input checked="" class="w-5 h-5 text-error border-outline-variant focus:ring-error" name="att_00023" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-error transition-colors">UA</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-on-tertiary-container border-outline-variant focus:ring-on-tertiary-container" name="att_00023" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-on-tertiary-container transition-colors">EA</span>
+</label>
+</div>
+</td>
+<td class="p-4">
+<input class="w-full p-2 text-body-md font-body-md rounded-lg border border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none opacity-50 cursor-not-allowed" disabled="" type="text">
+</td>
+</tr>
+<!-- Row 4: Noah -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant font-semibold text-lg">N</div>
+<span class="text-body-md font-body-md font-semibold text-on-surface">Noah</span>
+</div>
+</td>
+<td class="p-4 text-body-md font-body-md text-on-surface-variant">#00024</td>
+<td class="p-4">
+<div class="flex items-center space-x-6">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input checked="" class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" name="att_00024" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-primary transition-colors">P</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-error border-outline-variant focus:ring-error" name="att_00024" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-error transition-colors">UA</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-on-tertiary-container border-outline-variant focus:ring-on-tertiary-container" name="att_00024" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-on-tertiary-container transition-colors">EA</span>
+</label>
+</div>
+</td>
+<td class="p-4">
+<input class="w-full p-2 text-body-md font-body-md rounded-lg border border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none opacity-50 cursor-not-allowed" disabled="" type="text">
+</td>
+</tr>
+<!-- Row 5: John -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant font-semibold text-lg">J</div>
+<span class="text-body-md font-body-md font-semibold text-on-surface">John</span>
+</div>
+</td>
+<td class="p-4 text-body-md font-body-md text-on-surface-variant">#00025</td>
+<td class="p-4">
+<div class="flex items-center space-x-6">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" name="att_00025" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-primary transition-colors">P</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-error border-outline-variant focus:ring-error" name="att_00025" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-error transition-colors">UA</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input checked="" class="w-5 h-5 text-on-tertiary-container border-outline-variant focus:ring-on-tertiary-container" name="att_00025" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-on-tertiary-container transition-colors">EA</span>
+</label>
+</div>
+</td>
+<td class="p-4 relative">
+<div class="relative">
+<input class="w-full p-2 text-body-md font-body-md rounded-lg border border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" type="text" value="Medical Appointment">
+<div class="absolute z-40 right-full mr-6 top-1/2 transform -translate-y-1/2 w-72 p-3 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-md text-label-md font-label-md text-on-surface-variant"><div class="font-semibold text-primary mb-1">Callout 5 — Automatic pre-fill</div>If an approved leave request exists, the system automatically marks the student as Excused and pre-fills the reason.<div class="absolute top-1/2 -right-2 transform -translate-y-1/2 w-4 h-4 bg-surface-container-lowest border-t border-r border-outline-variant rotate-45"></div></div></div>
+</td>
+</tr>
+<!-- Row 6: Emily -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="p-4">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant font-semibold text-lg">E</div>
+<span class="text-body-md font-body-md font-semibold text-on-surface">Emily</span>
+</div>
+</td>
+<td class="p-4 text-body-md font-body-md text-on-surface-variant">#00026</td>
+<td class="p-4">
+<div class="flex items-center space-x-6">
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" name="att_00026" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-primary transition-colors">P</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input class="w-5 h-5 text-error border-outline-variant focus:ring-error" name="att_00026" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-error transition-colors">UA</span>
+</label>
+<label class="flex items-center space-x-2 cursor-pointer group">
+<input checked="" class="w-5 h-5 text-on-tertiary-container border-outline-variant focus:ring-on-tertiary-container" name="att_00026" type="radio">
+<span class="text-body-md font-body-md text-on-surface font-medium group-hover:text-on-tertiary-container transition-colors">EA</span>
+</label>
+</div>
+</td>
+<td class="p-4">
+<div class="space-y-1 relative">
+<div class="relative">
+<input class="w-full p-2 text-body-md font-body-md rounded-lg border border-error bg-error-container/20 focus:ring-1 focus:ring-error outline-none" type="text">
+<div class="absolute z-40 bottom-full transform w-64 p-3 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-md text-label-md font-label-md text-on-surface-variant mb-6 right-0"><div class="font-semibold text-primary mb-1">Callout 3 — Reason required</div>Reason required for correction: A reason is required when changing an absence to Excused, providing context for the manual correction.<div class="absolute -bottom-2 transform -translate-x-1/2 w-4 h-4 bg-surface-container-lowest border-b border-r border-outline-variant rotate-45 right-4"></div></div></div>
+<p class="text-error text-label-md font-label-md flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">error</span>Reason is required for Excused Absent</p>
+</div>
+</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-lowest flex justify-between items-center fixed bottom-0 right-0 left-64 z-20">
+<span class="text-label-md font-label-md text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">history</span>Last save: Oct 24, 2023, 08:30 AM by Teacher Steve</span>
+<button class="bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md py-2.5 px-6 rounded-full transition-colors flex items-center space-x-2 font-semibold shadow-sm">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+<span class="">Save Attendance</span>
+</button>
+</div>
+</main>
+
+
+</body></html>

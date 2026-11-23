@@ -2,13 +2,17 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import InternPageLayout from '../../../layouts/InternPageLayout.astro';
 import { portfolio } from '../../../data/portfolio';
+import { internProjectIds } from '../../../data/internFolio';
+import { Image } from 'astro:assets';
 
 interface Props {
   entry: CollectionEntry<'projects'>;
 }
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
+  const projects = (await getCollection('projects')).filter((entry) =>
+    internProjectIds.includes(entry.id),
+  );
   return projects.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
@@ -52,6 +56,9 @@ const { Content } = await render(entry);
       )}
     </h1>
     <p class="mt-3 text-lg leading-8 text-body-text">{entry.data.subtitle}</p>
+    {entry.id === 'educonnect' && (
+      <a href="/demos/educonnect.html" target="_blank" rel="noreferrer" class="mt-6 inline-block text-link-text underline underline-offset-4 hover:text-link-hover">Open EduConnect live demo ↗</a>
+    )}
     <dl class="mt-10 grid gap-5 border-y border-line py-8 md:grid-cols-3">
       {[
         { heading: 'Problem', body: entry.data.problem },
@@ -67,6 +74,22 @@ const { Content } = await render(entry);
     <div class="cv-detail mt-9 max-w-3xl leading-8 text-body-text">
       <Content />
     </div>
+    {entry.data.images?.length ? (
+      <section class="mt-12" aria-labelledby="project-images-title">
+        <h2 id="project-images-title" class="font-oswald text-3xl font-bold uppercase">
+          Project images
+        </h2>
+        <div class="mt-6 grid gap-8">
+          {entry.data.images.map((item) => (
+            <figure>
+              <div class="flex justify-center overflow-hidden border border-line bg-placeholder p-3 sm:p-5">
+                <Image src={item.src} alt={item.alt} loading="lazy" class="h-auto max-w-full" />
+              </div>
+            </figure>
+          ))}
+        </div>
+      </section>
+    ) : null}
     <div class="mt-9 flex flex-wrap gap-5 border-t border-line pt-6 text-sm font-semibold">
       {entry.data.links.map(({ label, url }) => (
         <a

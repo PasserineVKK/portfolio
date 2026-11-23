@@ -46,6 +46,7 @@
 .rail-menu:hover span:last-child { transform: translateX(-2px); }
 .rail-middle { display: flex; align-items: center; gap: 3.75rem; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
 .rail-copyright { writing-mode: vertical-rl; transform: rotate(180deg); }
+.rail-middle, .rail-copyright { font-weight: 700; }
 
 .folio-menu { position: fixed; z-index: 100; inset: 0; width: 100vw; max-width: none; height: 100vh; max-height: none; margin: 0; border: 0; padding: clamp(1.5rem, 4vw, 4rem) clamp(2rem, 6vw, 6rem) clamp(2rem, 4vw, 4rem) calc(48px + clamp(2rem, 6vw, 6rem)); background: var(--folio-deep); color: var(--folio-light-ink); }
 .folio-menu::backdrop { background: var(--folio-deep); }
@@ -56,7 +57,6 @@
 .folio-menu nav { display: flex; flex: 1; flex-direction: column; justify-content: center; }
 .folio-menu nav a { display: flex; align-items: baseline; gap: 1.6rem; width: min(100%, 70rem); border-bottom: 1px solid var(--folio-line); padding: .35rem 0; font-family: var(--folio-display); font-size: clamp(3.5rem, 7vw, 8rem); line-height: 1.05; text-transform: uppercase; transition: opacity 180ms ease, transform 180ms var(--ease-out); }
 .folio-menu nav a span { align-self: center; font-family: var(--folio-sans); font-size: .7rem; font-weight: 600; }
-.folio-menu nav a b { margin-left: auto; font-family: var(--folio-sans); font-size: .35em; font-weight: 400; }
 .folio-menu nav a:hover { opacity: .65; transform: translateX(6px); }
 .menu-bottom { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; }
 
@@ -118,14 +118,18 @@
 .works-preview::before { position: absolute; right: 0; bottom: 100%; left: 0; height: 16px; background: color-mix(in srgb, var(--folio-dark) 45%, var(--folio-stone)); clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 100%, 0 100%); content: ''; }
 .works-preview h2 { position: absolute; bottom: calc(100% + 12px); left: 0; width: max-content; margin: 0; padding: 0 .12em .04em 0; color: var(--folio-ink); font-family: var(--folio-display); font-size: clamp(1.8rem, 3.3vw, 3.2rem); font-weight: 500; line-height: 1; letter-spacing: -.025em; text-transform: uppercase; white-space: nowrap; pointer-events: none; }
 .preview-placeholder { position: relative; display: flex; width: 100%; height: 100%; align-items: end; padding: 1rem; border: 1px solid var(--folio-ink); overflow: hidden; background: var(--folio-stone); transition: background-color 250ms ease, color 250ms ease; }
+.preview-transport-image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; background: var(--folio-dark); opacity: 0; transition: opacity 250ms ease; }
+.preview-placeholder[data-visual='transport'] .preview-transport-image { opacity: 1; }
 .preview-diagonal { position: absolute; inset: 0; border-top: 1px solid var(--folio-ink); transform: rotate(-28deg) scale(1.6); pointer-events: none; }
 .preview-education-demo { position: absolute; inset: 0; opacity: 0; transition: opacity 250ms ease; }
+.preview-education-fallback { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.preview-education-demo iframe { opacity: 0; transition: opacity 250ms ease; }
+.preview-education-demo.is-loaded iframe { opacity: 1; }
 .preview-placeholder[data-visual='education'] .preview-education-demo { opacity: 1; }
-.preview-placeholder[data-visual='education'] .preview-diagonal { opacity: 0; }
+.preview-placeholder[data-visual] .preview-diagonal { opacity: 0; }
 .preview-label { position: relative; z-index: 1; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .preview-placeholder[data-visual='transport'] { background: var(--folio-cover-transport); }
 .preview-placeholder[data-visual='education'] { background: var(--folio-cover-education); }
-.preview-placeholder[data-visual] .preview-diagonal { opacity: .4; }
 .work-list { align-self: center; margin: 0; padding: 0; list-style: none; }
 .work-list li { border-top: 1px solid var(--folio-line); }
 .work-list li:last-child { border-bottom: 1px solid var(--folio-line); }

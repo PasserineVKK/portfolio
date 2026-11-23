@@ -6,12 +6,12 @@ export const folio = {
   timezone: 'Asia/Ho_Chi_Minh',
   timezoneLabel: 'GMT+7',
   availability: 'Open to Business Analyst internships',
-  heroLine: 'I turn complicated workflows into requirements people can work with.',
+  heroLine: 'I study workflows and document requirements, models, and prototypes.',
   introduction:
     'I am a Software Engineering student at FPT University, working toward a career in Business Analysis. I study the work behind a request, map where information gets lost, and make the next decision easier to see.',
   note: 'Good requirements begin with the work people actually do.',
   approach:
-    'I use these skills to turn complex needs into clear requirements, useful models, and ideas a team can test.',
+    'I practice Business Analysis through requirements, models, and prototypes that a team can review.',
   skills: [
     {
       number: '01',

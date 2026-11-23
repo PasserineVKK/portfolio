@@ -5,7 +5,12 @@ import InternPageLayout from '../../../layouts/InternPageLayout.astro';
 import { portfolio } from '../../../data/portfolio';
 import { internProjectIds } from '../../../data/internFolio';
 import pegaxusScreen from '../../../assets/pegaxus-screen.png';
-import educonnectScreen from '../../../assets/projects/educonnect/attendance-live.png';
+import initialLeaveRequest from '../../../assets/projects/educonnect/initial-leave-request.jpg';
+import initialAttendance from '../../../assets/projects/educonnect/initial-attendance.jpg';
+import proposedLeaveRequest from '../../../assets/projects/educonnect/proposed-leave-request.jpg';
+import proposedAttendance from '../../../assets/projects/educonnect/proposed-attendance.jpg';
+import wireframeBase from '../../../assets/projects/educonnect/wireframe-base.png';
+import wireframeAnnotated from '../../../assets/projects/educonnect/wireframe-annotated.png';
 import '../../../styles/project-detail.css';
 
 interface Props { entry: CollectionEntry<'projects'>; }
@@ -20,11 +25,16 @@ const { Content } = await render(entry);
 const caseNumber = String(internProjectIds.indexOf(entry.id) + 1).padStart(2, '0');
 const nextId = internProjectIds[(internProjectIds.indexOf(entry.id) + 1) % internProjectIds.length];
 const nextProject = (await getCollection('projects')).find((project) => project.id === nextId);
-const heroImage = entry.id === 'pegaxus' ? pegaxusScreen : educonnectScreen;
-const heroAlt = entry.id === 'pegaxus'
-  ? 'PEGAXUS transport platform home screen with a horse and navigation for journeys, compliance and platform tools.'
-  : 'EduConnect attendance screen with class selection, student status controls and a required reason for excused absence.';
 const isEduconnect = entry.id === 'educonnect';
+const useCase = entry.data.useCase;
+const visualAssets = {
+  'initial-leave-request': { src: initialLeaveRequest, alt: 'Initial EduConnect student leave-request and teacher approval activity diagram.', label: 'Initial leave-request workflow' },
+  'initial-attendance': { src: initialAttendance, alt: 'Initial EduConnect teacher attendance activity diagram.', label: 'Initial attendance workflow' },
+  'proposed-leave-request': { src: proposedLeaveRequest, alt: 'Proposed EduConnect student leave-request and teacher approval activity diagram.', label: 'Proposed leave-request workflow' },
+  'proposed-attendance': { src: proposedAttendance, alt: 'Proposed EduConnect teacher-controlled attendance correction activity diagram.', label: 'Proposed attendance workflow' },
+  'wireframe-base': { src: wireframeBase, alt: 'EduConnect attendance management wireframe without annotations.', label: 'Attendance wireframe' },
+  'wireframe-annotated': { src: wireframeAnnotated, alt: 'EduConnect attendance management wireframe with callouts for bulk action, correction, pre-fill and required reason.', label: 'Annotated wireframe' },
+};
 ---
 
 <InternPageLayout
@@ -44,24 +54,32 @@ const isEduconnect = entry.id === 'educonnect';
             <p class="case-kicker">{entry.data.role} <span aria-hidden="true">/</span> {entry.data.year}</p>
             <h1 id="case-title">{entry.data.title}</h1>
             <p class="case-dek">{entry.data.subtitle}</p>
-            <div class="case-actions">
-              {isEduconnect && <a class="case-action-primary" href="/demos/educonnect.html" target="_blank" rel="noreferrer">Open live demo <span aria-hidden="true">↗</span></a>}
-              {entry.data.titleUrl && <a class="case-action-text" href={entry.data.titleUrl} target="_blank" rel="noreferrer">Read project document <span aria-hidden="true">↗</span></a>}
-            </div>
+            {!isEduconnect && entry.data.titleUrl && <div class="case-actions"><a class="case-action-text" href={entry.data.titleUrl} target="_blank" rel="noreferrer">Read project document <span aria-hidden="true">↗</span></a></div>}
           </div>
-          <div class="case-hero-visual" data-pixel-image style={`aspect-ratio: ${heroImage.width} / ${heroImage.height}`}>
-            <Image src={heroImage} alt="" aria-hidden="true" width={32} loading="eager" class="case-lowres" />
+          {isEduconnect && entry.data.heroSummary && <div class="case-hero-summary">
+            <p class="case-hero-summary-label">Project summary</p>
+            <dl>
+              <div><dt>Role</dt><dd>{entry.data.role}</dd></div>
+              <div><dt>Context</dt><dd>{entry.data.heroSummary.context}</dd></div>
+              <div><dt>Domain</dt><dd>{entry.data.heroSummary.domain}</dd></div>
+              <div><dt>Focus</dt><dd>{entry.data.heroSummary.focus}</dd></div>
+              <div><dt>Primary user</dt><dd>{entry.data.heroSummary.primaryUser}</dd></div>
+              <div><dt>Activities</dt><dd>{entry.data.heroSummary.activities}</dd></div>
+            </dl>
+          </div>}
+          {!isEduconnect && <div class="case-hero-visual" data-pixel-image style={`aspect-ratio: ${pegaxusScreen.width} / ${pegaxusScreen.height}`}>
+            <Image src={pegaxusScreen} alt="" aria-hidden="true" width={32} loading="eager" class="case-lowres" />
             <Image
-              src={heroImage}
-              alt={heroAlt}
+              src={pegaxusScreen}
+              alt="PEGAXUS transport platform home screen with a horse and navigation for journeys, compliance and platform tools."
               loading="eager"
               decoding="async"
               fetchpriority="high"
-              widths={entry.id === 'pegaxus' ? [480, 768, 1024, 1366] : [480, 768, 1024, 1366, 1920]}
+              widths={[480, 768, 1024, 1366]}
               sizes="(max-width: 1000px) 100vw, 58vw"
               class="case-screen case-full-image"
             />
-          </div>
+          </div>}
         </div>
         <div class="case-hero-foot">
           <span>{entry.data.status}</span>
@@ -70,21 +88,51 @@ const isEduconnect = entry.id === 'educonnect';
       </div>
     </section>
 
-    <section class="case-brief" aria-labelledby="case-brief-title">
+    {isEduconnect && entry.data.caseSections && <div class="case-reading"><div class="case-wrap case-reading-grid">
+      <aside class="case-toc" aria-label="Table of contents">
+        <div class="case-toc-inner">
+          <p class="case-toc-label">Table of Contents</p>
+          <nav aria-label="EduConnect case study sections">
+            <ol>{entry.data.caseSections.map((section, index) => <li>
+              <a href={`#${section.id}`}><span class="case-toc-number">{String(index + 1).padStart(2, '0')}.</span><span class="case-toc-title">{section.title}</span><span class="case-toc-page">{section.pdfPage}</span></a>
+            </li>)}</ol>
+          </nav>
+          <p class="case-toc-source">Based on the EduConnect case study report</p>
+        </div>
+      </aside>
+      <div class="case-chapters">
+        {entry.data.caseSections.map((section, index) => <section class="case-chapter" id={section.id} aria-labelledby={`${section.id}-title`}>
+          <div class="case-chapter-heading"><span>{String(index + 1).padStart(2, '0')} / {String(entry.data.caseSections!.length).padStart(2, '0')}</span><h2 id={`${section.id}-title`}>{section.title}</h2></div>
+          <div class="case-chapter-body">
+            {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            {section.bullets && <ul>{section.bullets.map((bullet) => <li>{bullet}</li>)}</ul>}
+            {section.visuals?.map((key) => <figure class="case-document-visual">
+              <p class="case-visual-label">{visualAssets[key].label}</p>
+              <div class="case-document-image" data-pixel-image style={`aspect-ratio: ${visualAssets[key].src.width} / ${visualAssets[key].src.height}`}>
+                <Image src={visualAssets[key].src} alt="" aria-hidden="true" width={32} loading="lazy" class="case-lowres" />
+                <Image src={visualAssets[key].src} alt={visualAssets[key].alt} format="png" loading="lazy" decoding="async" class="case-full-image" />
+              </div>
+            </figure>)}
+          </div>
+        </section>)}
+      </div>
+    </div></div>}
+
+    {!isEduconnect && <section class="case-brief" aria-labelledby="case-brief-title">
       <div class="case-wrap case-brief-grid">
         <div class="case-section-intro">
           <p class="case-section-index">01 / The brief</p>
-          <h2 id="case-brief-title">From brief<br />to system.</h2>
+          <h2 id="case-brief-title">The project<br />in brief.</h2>
         </div>
         <dl class="case-facts">
           <div><dt>Challenge</dt><dd>{entry.data.problem}</dd></div>
           <div><dt>My contribution</dt><dd>{entry.data.produced}</dd></div>
-          <div><dt>Outcome</dt><dd>{entry.data.result}</dd></div>
+          <div><dt>Output</dt><dd>{entry.data.result}</dd></div>
         </dl>
       </div>
-    </section>
+    </section>}
 
-    <section class="case-story" aria-labelledby="case-story-title">
+    {!isEduconnect && <section class="case-story" aria-labelledby="case-story-title">
       <div class="case-wrap case-story-grid">
         <div class="case-section-intro">
           <p class="case-section-index">02 / The process</p>
@@ -92,28 +140,48 @@ const isEduconnect = entry.id === 'educonnect';
         </div>
         <div class="case-story-copy"><Content /></div>
       </div>
-    </section>
+    </section>}
 
-    {entry.data.images?.length && (
-      <section class="case-artifacts" aria-labelledby="case-artifacts-title">
-        <div class="case-wrap">
-          <div class="case-artifacts-head">
-            <p class="case-section-index">03 / Artifacts</p>
-            <h2 id="case-artifacts-title">The work, on screen.</h2>
-          </div>
-          <div class="case-artifact-grid">
-            {entry.data.images.map((item) => (
-              <div class="case-artifact">
-                <div class="case-artifact-media" data-pixel-image style={`width: min(100%, ${item.src.width}px); aspect-ratio: ${item.src.width} / ${item.src.height}`}>
-                  <Image src={item.src} alt="" aria-hidden="true" width={32} loading="lazy" class="case-lowres" />
-                  <Image src={item.src} alt={item.alt} loading="lazy" decoding="async" class="case-full-image" />
-                </div>
-              </div>
-            ))}
-          </div>
+    {!isEduconnect && (useCase || entry.data.images?.length) && <section class="case-outputs" aria-labelledby="case-outputs-title">
+      <div class="case-wrap">
+        <div class="case-outputs-head"><p class="case-section-index">03 / Selected artifacts</p><h2 id="case-outputs-title">My Outputs.</h2></div>
+        <div class="case-output-grid">
+          {useCase && <button class="case-output-card" type="button" data-output-open="case-uc18-dialog" aria-haspopup="dialog">
+            <span class="case-output-preview"><Image src={useCase.steps[0].visuals[0].src} alt="" loading="lazy" widths={[360, 720]} sizes="(max-width: 700px) 100vw, 33vw" /></span>
+            <span class="case-output-card-copy"><span class="case-output-kind">Use case specification / {useCase.id}</span><strong>{useCase.title}</strong><span class="case-output-action">View artifact <span aria-hidden="true">↗</span></span></span>
+          </button>}
+          {entry.data.images?.map((item, index) => <button class="case-output-card" type="button" data-output-open={`case-artifact-${index}-dialog`} aria-haspopup="dialog">
+            <span class:list={['case-output-preview', item.kind === 'diagram' && 'case-output-preview--diagram']}><Image src={item.src} alt="" loading="lazy" widths={[360, 720]} sizes="(max-width: 700px) 100vw, 33vw" /></span>
+            <span class="case-output-card-copy"><span class="case-output-kind">Project artifact / {String(index + (useCase ? 2 : 1)).padStart(2, '0')}</span><strong>{item.caption}</strong><span class="case-output-action">View artifact <span aria-hidden="true">↗</span></span></span>
+          </button>)}
         </div>
-      </section>
-    )}
+      </div>
+    </section>}
+
+    {useCase && <dialog class="case-output-dialog" id="case-uc18-dialog" aria-labelledby="case-uc18-title">
+      <div class="case-dialog-shell">
+        <header class="case-dialog-bar"><span>PEGAXUS / MY OUTPUTS</span><button type="button" data-output-close aria-label="Close use case dialog">Close <span aria-hidden="true">×</span></button></header>
+        <div class="case-dialog-body">
+          <div class="case-dialog-intro"><p class="case-section-index">Use case specification / {useCase.id}</p><h2 id="case-uc18-title">{useCase.title}</h2><p class="case-dialog-question">{useCase.question.map((part) => part.highlight ? <mark>{part.text}</mark> : part.text)}</p></div>
+          <div class="case-dialog-framing"><div><h3>The problem</h3><p>{useCase.problem}</p></div><div><h3>The approach</h3>{useCase.approach.map((paragraph) => <p>{paragraph}</p>)}</div></div>
+          {useCase.steps.map((step, index) => <section class="case-dialog-step" aria-labelledby={`case-uc18-step-${index}`}>
+            <div class="case-dialog-step-copy"><span>{String(index + 1).padStart(2, '0')} / {String(useCase.steps.length).padStart(2, '0')}</span><h3 id={`case-uc18-step-${index}`}>{step.title}</h3><p>{step.description}</p></div>
+            <div class="case-dialog-step-visuals">{step.visuals.map((visual) => <figure class="case-dialog-screen" aria-label={visual.alt}>
+              <div class="case-dialog-screen-part" data-pixel-image style={`aspect-ratio: ${visual.src.width} / ${visual.src.height}`}>
+                <Image src={visual.src} alt={visual.alt} format="png" loading="lazy" decoding="async" class="case-full-image" />
+              </div>
+              {visual.continuation && <div class="case-dialog-screen-part" data-pixel-image style={`aspect-ratio: ${visual.continuation.width} / ${visual.continuation.height}`}>
+                <Image src={visual.continuation} alt={visual.continuationAlt ?? ''} format="png" loading="lazy" decoding="async" class="case-full-image" />
+              </div>}
+            </figure>)}</div>
+          </section>)}
+          <div class="case-dialog-safeguards"><div><p class="case-section-index">Conditions and exceptions</p><h3>Where the flow stops.</h3></div><div><ul>{useCase.safeguards.map((item) => <li>{item}</li>)}</ul><p>{useCase.scopeNote}</p></div></div>
+        </div>
+      </div>
+    </dialog>}
+    {!isEduconnect && entry.data.images?.map((item, index) => <dialog class="case-output-dialog case-artifact-dialog" id={`case-artifact-${index}-dialog`} aria-labelledby={`case-artifact-${index}-title`}>
+      <div class="case-dialog-shell"><header class="case-dialog-bar"><span>PEGAXUS / MY OUTPUTS</span><button type="button" data-output-close aria-label="Close artifact dialog">Close <span aria-hidden="true">×</span></button></header><div class="case-dialog-body"><h2 id={`case-artifact-${index}-title`}>{item.caption}</h2><div class="case-artifact-image"><Image src={item.src} alt={item.alt} loading="lazy" decoding="async" /></div></div></div>
+    </dialog>)}
 
     <section class="case-end" aria-labelledby="case-next-title">
       <div class="case-wrap">
@@ -121,7 +189,6 @@ const isEduconnect = entry.id === 'educonnect';
           <p class="case-section-index">Project resources</p>
           <div>
             {entry.data.links.map(({ label, url }) => <a href={url} target="_blank" rel="noreferrer">{label} <span aria-hidden="true">↗</span></a>)}
-            {isEduconnect && <a href="/demos/educonnect.html" target="_blank" rel="noreferrer">Live demo <span aria-hidden="true">↗</span></a>}
           </div>
         </div>
         {nextProject && <a class="case-next" href={`/intern/projects/${nextProject.id}/`} aria-labelledby="case-next-title">
@@ -134,3 +201,4 @@ const isEduconnect = entry.id === 'educonnect';
   </article>
 </InternPageLayout>
 <script>import '../../../scripts/project-image-reveal.js';</script>
+<script>import '../../../scripts/project-outputs.js';</script>

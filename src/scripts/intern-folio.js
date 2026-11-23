@@ -69,6 +69,10 @@ document.querySelectorAll('[data-panel-link]').forEach((link) => {
 
 const preview = document.querySelector('[data-project-preview]');
 const previewLabel = preview?.querySelector('.preview-label');
+const educationDemo = preview?.querySelector('.preview-education-demo');
+educationDemo?.querySelector('iframe')?.addEventListener('load', () => {
+  educationDemo.classList.add('is-loaded');
+});
 document.querySelectorAll('[data-work-item]').forEach((link) => {
   const activate = () => {
     preview.dataset.visual = link.dataset.visual;

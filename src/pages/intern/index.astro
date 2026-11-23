@@ -7,12 +7,12 @@ import { folio, internProjectIds } from '../../data/internFolio';
 import portrait from '../../assets/portrait.png';
 import pegaxusScreen from '../../assets/pegaxus-screen.png';
 import meetlyScreen from '../../assets/meetly-screen.png';
+import educonnectScreen from '../../assets/projects/educonnect/attendance-live.png';
 import '../../styles/intern-folio.css';
 
 const projects = (await getCollection('projects'))
   .filter((entry) => internProjectIds.includes(entry.id))
   .sort((a, b) => a.data.order - b.data.order);
-const visuals = ['transport', 'education'];
 const marqueeScreens = [
   { kind: 'image' as const, src: pegaxusScreen },
   { kind: 'demo' as const },
@@ -35,12 +35,12 @@ const marqueeScreens = [
     <dialog class="folio-menu" id="folio-menu" aria-label="Folio navigation">
       <div class="menu-top"><span class="micro-label">THE INTERN / INDEX</span><button type="button" data-menu-close aria-label="Close menu">Close <span aria-hidden="true">×</span></button></div>
       <nav aria-label="Folio chapters">
-        <a href="#home" data-panel-link><span>01</span> Home <b aria-hidden="true">↗</b></a>
-        <a href="#about" data-panel-link><span>02</span> About <b aria-hidden="true">↗</b></a>
-        <a href="#works" data-panel-link><span>03</span> Works <b aria-hidden="true">↗</b></a>
-        <a href="#contact" data-panel-link><span>04</span> Contact <b aria-hidden="true">↗</b></a>
+        <a href="#home" data-panel-link><span>01</span> Home</a>
+        <a href="#about" data-panel-link><span>02</span> About</a>
+        <a href="#works" data-panel-link><span>03</span> Works</a>
+        <a href="#contact" data-panel-link><span>04</span> Contact</a>
       </nav>
-      <div class="menu-bottom"><span>{folio.availability}</span><a href={portfolio.github} target="_blank" rel="noreferrer">GitHub ↗</a></div>
+      <div class="menu-bottom"><span>{folio.availability}</span><a href={portfolio.github} target="_blank" rel="noreferrer">GitHub</a></div>
     </dialog>
 
     <main id="main" class="folio-stage"><div class="folio-track" data-folio-track>
@@ -67,18 +67,18 @@ const marqueeScreens = [
           </div>
           <div class="marquee-column direction-up slow"><div class="marquee-stack"><div class="visual-tile tile-education">E/02</div><div class="visual-tile tile-transport">P/01</div><div class="visual-tile tile-education">E/02</div></div><div class="marquee-stack"><div class="visual-tile tile-education">E/02</div><div class="visual-tile tile-transport">P/01</div><div class="visual-tile tile-education">E/02</div></div></div>
         </div>
-        <span class="transition-word transition-work">WORK</span><span class="transition-index micro-label">A SELECTION OF QUESTIONS, SYSTEMS & OUTCOMES</span>
+        <span class="transition-word transition-work">WORK</span><span class="transition-index micro-label">PROJECTS, MODELS & PROTOTYPES</span>
       </div></section>
 
       <section class="folio-panel panel-works tone-stone" id="works" data-rail-tone="dark" aria-labelledby="works-title"><div class="panel-pad works-inner">
         <div class="chapter-line"><span>CHAPTER II</span><span>02 / 03</span></div><div class="works-heading"><p class="micro-label">RELATED WORK</p></div>
-        <div class="works-preview"><div class="preview-placeholder" data-project-preview data-visual="education" aria-hidden="true"><span class="preview-diagonal"></span><div class="preview-education-demo demo-viewport" data-demo-viewport><iframe src="/demos/educonnect.html?preview=1" title="EduConnect attendance management demo" loading="lazy" sandbox="allow-scripts" tabindex="-1"></iframe></div><span class="preview-label">EduConnect LMS</span></div><h2 id="works-title">Selected cases.</h2></div>
-        <ol class="work-list">{projects.map((project, index) => <li><a href={`/intern/projects/${project.id}/`} data-work-item data-visual={visuals[index]} data-preview-title={project.data.title}><span class="work-number">0{index + 1}</span><span class="work-name">{project.data.title}</span><span class="work-arrow" aria-hidden="true">↗</span></a></li>)}</ol>
-        <div class="works-bottom"><p>✳ Case studies in systems thinking and digital experiences.</p><a class="folio-link" href="/intern/projects/">View all work <span aria-hidden="true">↗</span></a></div>
+        <div class="works-preview"><div class="preview-placeholder" data-project-preview data-visual="education" aria-hidden="true"><Image src={pegaxusScreen} alt="" loading="lazy" class="preview-transport-image" /><span class="preview-diagonal"></span><div class="preview-education-demo demo-viewport" data-demo-viewport><Image src={educonnectScreen} alt="" loading="lazy" class="preview-education-fallback" /><iframe src="/demos/educonnect.html?preview=1" title="EduConnect attendance management demo" loading="eager" sandbox="allow-scripts" tabindex="-1"></iframe></div><span class="preview-label">EduConnect LMS</span></div><h2 id="works-title">Selected cases.</h2></div>
+        <ol class="work-list">{projects.map((project, index) => <li><a href={`/intern/projects/${project.id}/`} data-work-item data-visual={project.id === 'educonnect' ? 'education' : 'transport'} data-preview-title={project.data.title}><span class="work-number">0{index + 1}</span><span class="work-name">{project.data.title}</span><span class="work-arrow" aria-hidden="true">↗</span></a></li>)}</ol>
+        <div class="works-bottom"><p>✳ Two projects in requirements and interface design.</p><a class="folio-link" href="/intern/projects/">View all work <span aria-hidden="true">↗</span></a></div>
       </div></section>
 
       <section class="folio-panel panel-services tone-dark" id="approach" data-rail-tone="light" aria-labelledby="services-title"><div class="services-inner">
-        <div class="services-intro"><div class="chapter-line"><span>CHAPTER III</span><span>03 / 03</span></div><p class="micro-label">SKILLS</p><h2 id="services-title">From a question<br />to a shared plan.</h2><p>{folio.approach}</p></div>
+        <div class="services-intro"><div class="chapter-line"><span>CHAPTER III</span><span>03 / 03</span></div><p class="micro-label">SKILLS</p><h2 id="services-title">My Skills</h2><p>{folio.approach}</p></div>
         <div class="service-grid">{folio.skills.map((skill) => <article class="service-column" tabindex="0">
           <span class="service-number">{skill.number}</span>
           <h3>{skill.title}</h3><ul class="service-items">{skill.items.map((item) => <li>{item}</li>)}</ul>

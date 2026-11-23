@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import logo from '../assets/logo.png';
+import { Image } from 'astro:assets';
 ---
 
 <Layout
@@ -7,12 +9,15 @@ import Layout from '../layouts/Layout.astro';
   description="Choose which side of Passerine you would like to meet."
 >
   <main
-    id="top"
+    id="main"
     class="flex min-h-dvh flex-col justify-between overflow-hidden bg-intro-bg px-5 py-7 text-intro-ink sm:px-10 lg:px-16"
     aria-labelledby="intro-title"
   >
     <div class="flex items-center justify-between border-b border-intro-line pb-4 font-oswald text-sm uppercase tracking-[.18em]">
-      <span>Passerine</span>
+      <a href="/" aria-label="Passerine home" class="inline-flex items-center gap-2">
+        <Image src={logo} alt="Passerine logo" class="h-8 w-8 object-contain" />
+        <span>Passerine</span>
+      </a>
       <span>01 / 04</span>
     </div>
     <div class="mx-auto flex w-full max-w-[1500px] flex-1 flex-col justify-center py-12">
@@ -69,23 +74,4 @@ import Layout from '../layouts/Layout.astro';
       Choose a page to continue
     </div>
   </main>
-  <script>
-    document
-      .querySelectorAll('nav[aria-label="Choose a profile"] a')
-      .forEach((link) => {
-        link.addEventListener('click', (event) => {
-          if (
-            event instanceof MouseEvent &&
-            (event.metaKey ||
-              event.ctrlKey ||
-              event.shiftKey ||
-              event.altKey ||
-              event.button !== 0)
-          )
-            return;
-          event.preventDefault();
-          window.location.replace((link as HTMLAnchorElement).href);
-        });
-      });
-  </script>
 </Layout>

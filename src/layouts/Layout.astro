@@ -22,6 +22,8 @@ const {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content="/favicon-ring.png" />
+    <link rel="icon" type="image/png" sizes="256x256" href="/favicon-ring.png" />
     <title>{title}</title>
     <link
       rel="preload"
@@ -35,6 +37,7 @@ const {
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <slot />
   </body>
 </html>

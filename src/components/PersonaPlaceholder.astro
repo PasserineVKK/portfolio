@@ -1,56 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from './Footer.astro';
-
-interface Props {
-  title: string;
-  number: string;
-  description: string;
-}
+import logo from '../assets/logo.png';
+import { Image } from 'astro:assets';
+interface Props { title: string; number: string; description: string; }
 const { title, number, description } = Astro.props;
 ---
 
 <Layout title={`${title} | Passerine`} description={description}>
   <div id="top"></div>
-  <header class="sticky top-0 z-50 border-b border-line bg-bg/95 px-4 py-4 backdrop-blur-sm sm:px-6">
-    <div class="mx-auto flex max-w-7xl items-center justify-between gap-5">
-      <a class="font-oswald text-xl font-bold uppercase" href="#top">
-        Passerine<span class="text-primary">.</span>
-      </a>
-      <nav aria-label={`${title} navigation`}>
-        <a
-          class="text-sm font-semibold text-link-text hover:text-link-hover"
-          href="/intern/"
-        >
-          The Intern
-        </a>
-      </nav>
-    </div>
-  </header>
-  <main
-    class="flex min-h-[70vh] items-center bg-surface px-4 py-18 sm:px-6"
-    aria-labelledby="persona-title"
-  >
-    <div class="mx-auto w-full max-w-7xl">
-      <p class="mb-5 text-sm font-bold uppercase tracking-[.2em]">
-        {number} / Passerine
-      </p>
-      <h1
-        id="persona-title"
-        class="font-oswald text-[clamp(4rem,14vw,11rem)] font-bold uppercase leading-none"
-      >
-        {title}
-      </h1>
-      <p class="mt-8 max-w-xl text-lg leading-8 text-body-text">
-        This page is being prepared. The Intern page has the work and experience
-        available now.
-      </p>
-      <a
-        class="mt-8 inline-flex min-h-12 items-center bg-primary px-6 font-bold text-on-primary underline underline-offset-4 transition-colors hover:bg-primary-hover hover:text-on-primary-hover"
-        href="/intern/"
-      >
-        Meet The Intern
-      </a>
+  <header class="site-header"><div class="site-wrap header-inner persona-header"><a class="brand" href="/"><Image src={logo} alt="" width={34} height={34} />Passerine<span aria-hidden="true">.</span></a><a class="header-contact" href="/intern/">The Intern ↗</a></div></header>
+  <main id="main" class="persona-main" aria-labelledby="persona-title">
+    <div class="site-wrap persona-content">
+      <p class="eyebrow">{number} / 04 — Passerine</p>
+      <h1 id="persona-title">{title}</h1>
+      <div class="persona-bottom"><p>There is more to me than my work. This part of the story is still taking shape.</p><a class="button" href="/intern/">See my work <span aria-hidden="true">↗</span></a></div>
     </div>
   </main>
   <Footer />

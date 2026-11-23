@@ -1,119 +1,24 @@
 ---
-import PlaceholderImage from './PlaceholderImage.astro';
-import { footerNavigation, socialPlaceholders } from '../data/navigation';
+import { footerNavigation } from '../data/navigation';
 import { portfolio } from '../data/portfolio';
-
-const { alias, name, role, location, email, github, metrics } = portfolio;
 ---
 
-<footer class="bg-dark text-on-dark" aria-label="Site footer">
-  <div class="relative isolate overflow-hidden bg-placeholder text-ink">
-    <!-- TODO: Replace this white placeholder with a footer background image. -->
-    <PlaceholderImage
-      alt="White placeholder for a future footer background image"
-      label="FOOTER BACKGROUND PLACEHOLDER"
-      class="absolute inset-0 z-0 h-full w-full border-0"
-    />
-
-    <div class="relative z-10 mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1.35fr_1fr] lg:items-end lg:gap-8 lg:py-18">
-      <div class="order-2 lg:order-1 lg:pb-8">
-        <h2 class="font-oswald text-2xl font-bold uppercase">Get in touch</h2>
-        <address class="mt-5 space-y-3 not-italic text-body-text">
-          <p>{location}, Vietnam</p>
-          <a
-            class="block break-all text-link-text transition-colors hover:text-link-hover"
-            href={`mailto:${email}`}
-          >
-            {email}
-          </a>
-        </address>
-      </div>
-
-      <div class="order-1 bg-dark px-6 py-9 text-center text-on-dark shadow-xl sm:px-10 lg:order-2 lg:py-12">
-        <p class="font-oswald text-5xl font-bold uppercase sm:text-6xl">
-          {alias}
-          <span class="text-accent">.</span>
-        </p>
-        <p class="mt-4 text-lg font-semibold">{name}</p>
-        <p class="mt-2 text-sm text-on-dark/85">{role}</p>
-
-        <div
-          class="mt-8 grid grid-cols-3 gap-2 border-y border-on-dark/25 py-6"
-          aria-label="Portfolio highlights"
-        >
-          {metrics.slice(0, 3).map(({ value, label }) => (
-            <div class="px-1">
-              <p class="font-oswald text-2xl font-bold sm:text-3xl">{value}</p>
-              <p class="mt-2 text-[.68rem] leading-4 text-on-dark/85">
-                {label}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <a
-          class="mt-8 inline-flex min-h-12 w-full items-center justify-center bg-accent px-5 font-bold text-on-accent underline underline-offset-4 transition-colors hover:bg-surface"
-          href={`mailto:${email}`}
-        >
-          Email me
-        </a>
-      </div>
-
-      <nav class="order-3 lg:pb-8" aria-label="Footer navigation">
-        <h2 class="font-oswald text-2xl font-bold uppercase">Explore</h2>
-        <ul class="mt-5 space-y-3">
-          {footerNavigation.map(({ label, href }) => (
-            <li>
-              <a class="transition-colors hover:text-link-hover" href={href}>
-                {label}
-              </a>
-            </li>
-          ))}
-        </ul>
+<footer class="site-footer" aria-label="Site footer">
+  <div class="site-wrap footer-main">
+    <div>
+      <p class="eyebrow">Passerine / Business Analysis</p>
+      <h2>Have a workflow<br />worth untangling?</h2>
+      <a class="button button-light" href={`mailto:${portfolio.email}`}>Email me <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="footer-side">
+      <p><span class="person-name">{portfolio.name}</span><br />{portfolio.location}, Vietnam</p>
+      <nav aria-label="Footer navigation">
+        {footerNavigation.map(({ label, href }) => <a href={href}>{label}</a>)}
       </nav>
     </div>
   </div>
-
-  <div class="mx-auto grid max-w-7xl gap-6 px-4 py-7 text-sm sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
-    <p>
-      © {new Date().getFullYear()} {alias} — {name}
-    </p>
-
-    <div
-      class="flex gap-3 lg:justify-center"
-      aria-label="Social icon placeholders; links to be added"
-    >
-      {socialPlaceholders.map(({ label, glyph }) => (
-        <span
-          class="grid size-10 place-items-center rounded-full border border-on-dark/40 font-bold"
-          role="img"
-          aria-label={label}
-        >
-          {glyph}
-        </span>
-      ))}
-    </div>
-
-    <div class="flex flex-wrap gap-x-5 gap-y-2 lg:justify-end">
-      <a
-        class="transition-colors hover:text-accent"
-        href={github}
-        target="_blank"
-        rel="noreferrer"
-      >
-        GitHub
-      </a>
-      <!-- TODO: Replace # when the CV PDF is available. -->
-      <a
-        class="transition-colors hover:text-accent"
-        href="#"
-        aria-label="CV file placeholder"
-      >
-        CV file
-      </a>
-      <a class="transition-colors hover:text-accent" href="#top">
-        Back to top
-      </a>
-    </div>
+  <div class="site-wrap footer-bottom">
+    <span>© {new Date().getFullYear()} {portfolio.alias}</span>
+    <div><a href={portfolio.github} target="_blank" rel="noreferrer">GitHub ↗</a><a href="#top">Back to top ↑</a></div>
   </div>
 </footer>

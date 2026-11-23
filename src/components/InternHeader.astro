@@ -1,30 +1,22 @@
 ---
-import { internNavigation } from '../data/navigation';
 import { portfolio } from '../data/portfolio';
+import logo from '../assets/logo.png';
+import { Image } from 'astro:assets';
+const path = Astro.url.pathname;
+const nav = [
+  { label: 'Overview', href: '/intern/' },
+  { label: 'Projects', href: '/intern/projects/' },
+  { label: 'Research', href: '/intern/research/' },
+  { label: 'Experience', href: '/intern/experience/' },
+];
 ---
 
-<header class="sticky top-0 z-50 border-b border-line bg-bg/95 backdrop-blur-sm">
-  <div class="mx-auto flex max-w-7xl items-center gap-6 px-4 py-3 sm:px-6">
-    <a
-      class="shrink-0 font-oswald text-xl font-bold uppercase tracking-wide text-ink"
-      href="/intern/"
-    >
-      {portfolio.alias}
-      <span class="text-primary">.</span>
-    </a>
-    <nav
-      class="min-w-0 flex-1 overflow-x-auto"
-      aria-label="The Intern sections"
-    >
-      <ul class="flex w-max items-center gap-5 text-xs font-semibold uppercase tracking-wide text-ink sm:gap-6">
-        {internNavigation.map(({ label, href }) => (
-          <li>
-            <a class="transition-colors hover:text-link-hover" href={href}>
-              {label}
-            </a>
-          </li>
-        ))}
-      </ul>
+<header class="site-header">
+  <div class="site-wrap header-inner">
+    <a class="brand" href="/" aria-label="Passerine — choose a profile"><Image src={logo} alt="" width={34} height={34} />{portfolio.alias}<span aria-hidden="true">.</span></a>
+    <nav class="primary-nav" aria-label="The Intern sections">
+      {nav.map(({ label, href }) => <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>)}
     </nav>
+    <a class="header-contact" href={`mailto:${portfolio.email}`}>Contact <span aria-hidden="true">↗</span></a>
   </div>
 </header>

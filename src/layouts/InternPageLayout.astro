@@ -15,9 +15,9 @@ const { title, description, surface = false } = Astro.props;
 <Layout title={title} description={description}>
   <div id="top"></div>
   <InternHeader />
-  <main
+  <main id="main"
     class:list={[
-      'px-4 py-16 sm:px-6 sm:py-24',
+      'detail-main',
       surface ? 'bg-surface' : 'bg-bg',
     ]}
   >

@@ -1,4 +1,3 @@
-document.documentElement.classList.add('js');
 const tabs = [...document.querySelectorAll('[data-capability-tab]')];
 
 function selectCapability(id, focus = false) {
@@ -31,31 +30,3 @@ tabs.forEach((tab, index) => {
     selectCapability(tabs[nextIndex].dataset.capabilityTab, true);
   });
 });
-
-let revealObserver;
-function initializeReveals() {
-  const revealItems = document.querySelectorAll('.reveal:not(.is-visible)');
-  if (
-    !('IntersectionObserver' in window) ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    revealItems.forEach((item) => item.classList.add('is-visible'));
-    return;
-  }
-
-  revealObserver ??= new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12 },
-  );
-
-  revealItems.forEach((item) => revealObserver.observe(item));
-}
-
-initializeReveals();

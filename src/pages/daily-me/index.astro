@@ -1,9 +1,154 @@
 ---
-import PersonaPlaceholder from '../../components/PersonaPlaceholder.astro';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import logo from '../../assets/logo.png';
+import '../../styles/daily-me.css';
 ---
 
-<PersonaPlaceholder
-  title="The Daily Me"
-  number="03"
-  description="The Daily Me side of Passerine."
-/>
+<Layout
+  title="The Daily Me | Passerine"
+  description="The story behind Khuyên, the name Passerine, and the little bird that represents me."
+>
+  <header class="site-header">
+    <div class="site-wrap header-inner persona-header">
+      <a class="brand" href="/" aria-label="Passerine — choose a profile"><Image src={logo} alt="" width={34} height={34} />Passerine<span aria-hidden="true">.</span></a>
+      <a class="header-contact" href="/intern/">The Intern ↗</a>
+    </div>
+  </header>
+
+  <main id="main" class="daily-me">
+    <section class="daily-hero" aria-labelledby="daily-title">
+      <div class="site-wrap daily-hero-inner">
+        <a class="daily-eyebrow inline-flex min-h-11 w-fit items-center transition-opacity duration-200 hover:opacity-60" href="/" data-enter><span class="!mx-0 border-b border-current pb-1.5">← MEET ANOTHER ME?</span></a>
+        <div class="daily-hero-grid">
+          <div class="daily-hero-copy" data-enter>
+            <h1 id="daily-title">The<br />Daily Me<span>.</span></h1>
+            <p>There is a little story behind the name and the bird you see around this site.</p>
+          </div>
+          <div class="daily-bird" data-enter>
+            <Image src={logo} alt="Illustrated small brown bird perched on a wooden post" loading="eager" fetchpriority="high" widths={[320, 480, 640, 800]} sizes="(max-width: 700px) 70vw, 36vw" />
+          </div>
+        </div>
+        <nav class="daily-questions" aria-label="Questions about my name and mascot">
+          <a href="#why-passerine"><span>01</span><strong>Why “Passerine”?</strong><span aria-hidden="true">↘</span></a>
+          <a href="#why-bird"><span>02</span><strong>Why is my mascot a bird?</strong><span aria-hidden="true">↘</span></a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="daily-answer daily-name" id="why-passerine" aria-labelledby="passerine-title">
+      <div class="site-wrap daily-answer-grid">
+        <div class="daily-answer-heading">
+          <p class="daily-section-number">01 / The name</p>
+          <h2 id="passerine-title">Why<br />“Passerine”?</h2>
+        </div>
+        <div class="daily-answer-content">
+          <p class="daily-lead">My Vietnamese name, Khuyên, has a few meanings. It can mean “to advise,” appear in <em>khuyên tai</em> (earring), or refer to <em>chim khuyên</em>, a white-eye bird.</p>
+          <p>I have always liked the bird meaning most. White-eyes belong to the order Passeriformes, also called perching birds; that order includes songbirds. <a class="daily-inline-link" href="https://en.wikipedia.org/wiki/Passerine" target="_blank" rel="noopener noreferrer"><em>Passerine</em></a> is the English word for a bird in this order, so I chose it as my English name.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="daily-answer daily-mascot min-[701px]:has-[data-open=true]:!pb-0" id="why-bird" aria-labelledby="bird-title">
+      <div class="site-wrap daily-answer-grid">
+        <div class="daily-answer-heading min-[701px]:sticky min-[701px]:top-24 min-[701px]:self-start">
+          <p class="daily-section-number">02 / The mascot</p>
+          <h2 id="bird-title">Why is my<br />mascot a bird?</h2>
+        </div>
+        <div class="daily-answer-content group/ms min-[701px]:data-[open=true]:pb-[19rem]" data-ms-root data-open="false">
+          <div class="grid grid-rows-[1fr] opacity-100 transition-[grid-template-rows,opacity] [transition-duration:700ms,500ms] ease-[var(--ease-out)] group-data-[open=true]/ms:grid-rows-[0fr] group-data-[open=true]/ms:opacity-0 motion-reduce:transition-none" data-ms-intro>
+            <div class="min-h-0 overflow-hidden">
+              <p class="daily-lead">I love birds. My name is also the name of a bird, so why wouldn’t my mascot be one?</p>
+              <p>I’ve used this mascot since 2019, when I was in eighth grade. In a way, I see myself as a passerine: a small bird. I feel small and ordinary in a very big world<mark class="bg-accent text-on-accent">, and I’m happy to admit both.</mark></p>
+            </div>
+          </div>
+
+          <section class="mt-16 border-t-2 border-ink pt-5 transition-[margin-top] duration-700 ease-[var(--ease-out)] group-data-[open=true]/ms:mt-0 motion-reduce:transition-none" aria-labelledby="mascot-facts-title" data-ms-facts>
+            <h3 id="mascot-facts-title" class="m-0">
+              <button type="button" class="flex w-full cursor-pointer flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-left text-base font-bold uppercase tracking-[0.14em] text-ink focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-ink" aria-expanded="false" aria-controls="mascot-facts-content" data-ms-trigger>
+                <span>Facts about the Passerine <em class="font-semibold normal-case not-italic tracking-normal opacity-70">(maybe birds, maybe myself)</em></span>
+                <span class="shrink-0 text-xs font-semibold normal-case tracking-normal opacity-60 transition-opacity duration-500 group-data-[open=true]/ms:opacity-0 motion-reduce:transition-none" aria-hidden="true">hover to reveal ↓</span>
+              </button>
+            </h3>
+            <div id="mascot-facts-content" class="invisible grid grid-rows-[0fr] opacity-0 transition-[grid-template-rows,opacity,visibility] [transition-duration:700ms,500ms,0s] [transition-delay:0s,0s,700ms] ease-[var(--ease-out)] group-data-[open=true]/ms:visible group-data-[open=true]/ms:grid-rows-[1fr] group-data-[open=true]/ms:opacity-100 group-data-[open=true]/ms:[transition-delay:0s,100ms,0s] motion-reduce:transition-none" aria-hidden="true" data-ms-panel>
+              <div class="min-h-0 overflow-hidden">
+                <div class="pt-5">
+                  <article class="border-b border-line py-5">
+                    <p>Passerines, like the tiny 25 g northern wheatear, fly roughly 14,500 km each way from Alaska to winter in Africa, taking over 91 days to make the trip.</p>
+                  </article>
+                  <article class="border-b border-line py-5">
+                    <p>Passerines, like the European starling, went from just 60 birds let loose in Central Park by a Shakespeare fan to over 200 million in a century, thriving off human leftovers and nesting right inside buildings.</p>
+                  </article>
+                  <article class="border-b border-line py-5">
+                    <p>Passerines, like the house sparrow found nearly everywhere on Earth, hold the record for living alongside humans more widely than any other bird.</p>
+                  </article>
+                  <div class="mt-14 font-oswald text-[clamp(2.5rem,5.5vw,4.5rem)] font-bold uppercase leading-[1.05]">Does small mean limited?<br />Or does it mean fragile?</div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  function initMascotFacts() {
+    document.querySelectorAll<HTMLElement>('[data-ms-root]').forEach((root) => {
+      if (root.dataset.msReady === 'true') return;
+      root.dataset.msReady = 'true';
+
+      const facts = root.querySelector<HTMLElement>('[data-ms-facts]');
+      const trigger = root.querySelector<HTMLButtonElement>('[data-ms-trigger]');
+      const panel = root.querySelector<HTMLElement>('[data-ms-panel]');
+      const intro = root.querySelector<HTMLElement>('[data-ms-intro]');
+      if (!facts || !trigger || !panel || !intro) return;
+
+      let closeTimer: ReturnType<typeof setTimeout> | undefined;
+      let keyboardFocus = false;
+      const setOpen = (open: boolean) => {
+        window.clearTimeout(closeTimer);
+        root.dataset.open = String(open);
+        trigger.setAttribute('aria-expanded', String(open));
+        panel.setAttribute('aria-hidden', String(!open));
+        intro.setAttribute('aria-hidden', String(open));
+      };
+      const closeLater = () => {
+        window.clearTimeout(closeTimer);
+        closeTimer = window.setTimeout(() => setOpen(false), 300);
+      };
+
+      facts.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'mouse') setOpen(true);
+      });
+      facts.addEventListener('pointerleave', (event) => {
+        if (event.pointerType === 'mouse' && !keyboardFocus) closeLater();
+      });
+      facts.addEventListener('focusin', (event) => {
+        if ((event.target as HTMLElement).matches(':focus-visible')) {
+          keyboardFocus = true;
+          setOpen(true);
+        }
+      });
+      facts.addEventListener('focusout', (event) => {
+        if (!facts.contains(event.relatedTarget as Node | null)) {
+          keyboardFocus = false;
+          closeLater();
+        }
+      });
+      trigger.addEventListener('click', () => {
+        if (window.matchMedia('(hover: none)').matches) {
+          setOpen(root.dataset.open !== 'true');
+        } else {
+          setOpen(true);
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initMascotFacts);
+  initMascotFacts();
+</script>

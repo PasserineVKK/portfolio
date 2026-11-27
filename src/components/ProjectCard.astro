@@ -4,11 +4,12 @@ import { Image } from 'astro:assets';
 interface Props { entry: CollectionEntry<'projects'>; variant?: 'featured' | 'summary'; actionLabel?: string; headingLevel?: 2 | 3; }
 const { entry, variant = 'summary', actionLabel = 'Read case study', headingLevel = 3 } = Astro.props;
 const { id, data } = entry;
+const cardImage = data.cardImage ?? data.images?.[0];
 const Heading = `h${headingLevel}`;
 ---
 
 <article class:list={['project-card', variant === 'featured' && 'project-card-featured']}>
-  {data.images?.length ? <a class="project-image" href={`/intern/projects/${id}/`} aria-label={`Read ${data.title} case study`}><Image src={data.images[0].src} alt={data.images[0].alt} loading="lazy" /></a> : <div class="project-type" aria-hidden="true"><span>{String(data.order).padStart(2, '0')}</span><span>{data.status}</span></div>}
+  {cardImage ? <a class:list={['project-image', data.cardImage && 'project-image-contained']} href={`/intern/projects/${id}/`} aria-label={`Read ${data.title} case study`}><Image src={cardImage.src} alt={cardImage.alt} loading="lazy" /></a> : <div class="project-type" aria-hidden="true"><span>{String(data.order).padStart(2, '0')}</span><span>{data.status}</span></div>}
   <div class="project-content">
     <p class="eyebrow">{data.role} <span aria-hidden="true">/</span> {data.year}</p>
     <Heading><a href={`/intern/projects/${id}/`}>{data.title}</a></Heading>

@@ -48,9 +48,13 @@
 .rail-copyright { writing-mode: vertical-rl; transform: rotate(180deg); }
 .rail-middle, .rail-copyright { font-weight: 700; }
 
-.folio-menu { position: fixed; z-index: 100; inset: 0; width: 100vw; max-width: none; height: 100vh; max-height: none; margin: 0; border: 0; padding: clamp(1.5rem, 4vw, 4rem) clamp(2rem, 6vw, 6rem) clamp(2rem, 4vw, 4rem) calc(48px + clamp(2rem, 6vw, 6rem)); background: var(--folio-deep); color: var(--folio-light-ink); }
-.folio-menu::backdrop { background: var(--folio-deep); }
+.folio-menu { position: fixed; z-index: 100; inset: 0; width: 100vw; max-width: none; height: 100vh; max-height: none; margin: 0; border: 0; padding: clamp(1.5rem, 4vw, 4rem) clamp(2rem, 6vw, 6rem) calc(48px + clamp(2rem, 6vw, 6rem)); background: var(--folio-deep); color: var(--folio-light-ink); opacity: 0; transform: translateY(1rem); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+.folio-menu::backdrop { background: var(--folio-deep); opacity: 0; transition: opacity 700ms var(--ease-out); }
+.folio-menu.is-visible, .folio-menu.is-visible::backdrop { opacity: 1; }
+.folio-menu.is-visible { transform: translateY(0); }
 .folio-menu[open] { display: flex; flex-direction: column; }
+.folio-menu > * { opacity: 0; transform: translateY(.75rem); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); }
+.folio-menu.is-visible > * { opacity: 1; transform: translateY(0); transition-delay: 200ms; }
 .menu-top, .menu-bottom { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
 .menu-top button { border: 0; background: none; color: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: .12em; }
 .menu-top button span { margin-left: 1rem; font-size: 1.5rem; vertical-align: middle; }
@@ -252,6 +256,7 @@
   .menu-bottom { align-items: start; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .folio-menu, .folio-menu::backdrop, .folio-menu > * { transition: none; transform: none; }
   .folio .marquee-column { animation: none; transform: none; }
   .folio .transition-gallery { transform: none; }
   .folio .service-background { transition: none; }

@@ -23,12 +23,6 @@
 .case-hero-summary dl > div { display: grid; grid-template-columns: minmax(6rem, .4fr) minmax(0, 1fr); gap: 1rem; border-top: 1px solid color-mix(in srgb, var(--on-dark) 28%, transparent); padding-block: 1.15rem; }
 .case-hero-summary dt { padding-top: .2rem; font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .case-hero-summary dd { margin: 0; font-size: clamp(1.05rem, 1.45vw, 1.4rem); line-height: 1.4; }
-.case-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; margin-top: 2rem; }
-.case-action-primary { display: inline-flex; min-height: 3rem; align-items: center; justify-content: space-between; gap: 2.5rem; padding: .7rem 1rem; background: var(--on-dark); color: var(--dark); font-size: .84rem; font-weight: 700; transition: transform 180ms var(--ease-out), background-color 180ms ease; }
-.case-action-primary:hover { transform: translateY(-2px); background: var(--accent); }
-.case-action-primary:active { transform: scale(.98); }
-.case-action-text { display: inline-flex; align-items: center; gap: 1.5rem; border-bottom: 1px solid currentColor; padding-block: .45rem; font-size: .84rem; font-weight: 700; transition: gap 180ms var(--ease-out); }
-.case-action-text:hover { gap: 2rem; }
 .case-hero-visual { position: relative; width: 100%; overflow: hidden; border: 1px solid color-mix(in srgb, var(--on-dark) 28%, transparent); background: var(--bg); box-shadow: 1.5rem 1.5rem 0 color-mix(in srgb, var(--accent) 15%, transparent); }
 .case-screen { display: block; width: 100%; height: auto; }
 .case-lowres { display: none; }

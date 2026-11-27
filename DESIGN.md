@@ -48,17 +48,17 @@ Derived (theme-agnostic): `--ink-muted: color-mix(in srgb, var(--ink) 72%, var(-
 
 Regular paragraph and detail text on light backgrounds uses `--body-text`. Headings, links, metadata, and text on dark or primary backgrounds keep their own role colors.
 
-The entry chooser is intentionally grayscale and does not use the portfolio theme. White image placeholders use `--placeholder` in both themes. These role tokens are defined in `src/styles/global.css`.
+The entry chooser is intentionally grayscale and does not use the portfolio theme. Its `--home-*` role tokens are scoped to `.home-entry` in `src/styles/home-entry.css`; the smoke shades and card surfaces are declared there too. White image placeholders use `--placeholder` in both themes and are defined in `src/styles/global.css`.
 
 | Shared / entry token | Value | Role |
 |---|---|---|
 | `--placeholder` | `#FFFFFF` | Image placeholder |
-| `--intro-bg` | `#F8F8F8` | Entry background |
-| `--intro-ink` | `#141414` | Entry text |
-| `--intro-soft` | `#404040` | Muted entry text |
-| `--intro-line` | `#A8A8A8` | Entry dividers |
-| `--intro-anxious` | `#4C4C4C` | Anxious profile surface |
-| `--intro-on-anxious` | `#FFFFFF` | Text on anxious surface |
+| `--home-bg` | `#686868` | Entry background |
+| `--home-ink` | `#F1F1F1` | Entry heading and text |
+| `--home-muted` | `#CFCFCF` | Secondary entry text |
+| `--home-card-ink` | `#141414` | Text on the three light profiles |
+| `--home-anxious-bg` | `#1B1B1B` | Anxious profile surface |
+| `--home-anxious-ink` | `#CFCFCF` | Text on the anxious profile |
 
 ## Setup
 

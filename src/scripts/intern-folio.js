@@ -30,18 +30,37 @@ function updateTime() {
 updateTime();
 window.setInterval(updateTime, 1000);
 
-function closeMenu() {
-  if (menu.open) menu.close();
-  menuOpen.setAttribute('aria-expanded', 'false');
-  menuOpen.focus();
+let menuClosing = false;
+const menuMotionReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function closeMenu(afterClose) {
+  if (!menu.open || menuClosing) return;
+  menuClosing = true;
+  menu.classList.remove('is-visible');
+  const finish = () => {
+    menu.close();
+    menuClosing = false;
+    menuOpen.setAttribute('aria-expanded', 'false');
+    menuOpen.focus({ preventScroll: true });
+    afterClose?.();
+  };
+  if (menuMotionReduced.matches) finish();
+  else window.setTimeout(finish, 700);
 }
 menuOpen.addEventListener('click', () => {
   menu.showModal();
+  // Commit the closed style before starting the transition.
+  void menu.offsetWidth;
+  menu.classList.add('is-visible');
   menuOpen.setAttribute('aria-expanded', 'true');
   menuClose.focus();
 });
-menuClose.addEventListener('click', closeMenu);
+menuClose.addEventListener('click', () => closeMenu());
 menu.addEventListener('close', () => menuOpen.setAttribute('aria-expanded', 'false'));
+menu.addEventListener('cancel', (event) => {
+  event.preventDefault();
+  closeMenu();
+});
 menu.addEventListener('click', (event) => {
   if (event.target === menu) closeMenu();
 });
@@ -62,8 +81,8 @@ document.querySelectorAll('[data-panel-link]').forEach((link) => {
     const id = link.getAttribute('href')?.slice(1);
     if (!id) return;
     event.preventDefault();
-    if (menu.open) closeMenu();
-    goToPanel(id);
+    if (menu.open) closeMenu(() => goToPanel(id));
+    else goToPanel(id);
   });
 });
 

@@ -15,6 +15,7 @@ const projects = defineCollection({
     problem: z.string(),
     produced: z.string(),
     result: z.string(),
+    cardImage: z.object({ src: image(), alt: z.string() }).optional(),
     heroSummary: z.object({
       context: z.string(),
       domain: z.string(),

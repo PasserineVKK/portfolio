@@ -2,76 +2,98 @@
 import Layout from '../layouts/Layout.astro';
 import logo from '../assets/logo.png';
 import { Image } from 'astro:assets';
+import { portfolio } from '../data/portfolio';
+import '../styles/home-entry.css';
 ---
 
 <Layout
   title="Passerine | Choose a profile"
   description="Choose which side of Passerine you would like to meet."
 >
-  <main
-    id="main"
-    class="flex min-h-dvh flex-col justify-between overflow-hidden bg-intro-bg px-5 py-7 text-intro-ink sm:px-10 lg:px-16"
-    aria-labelledby="intro-title"
-  >
-    <div class="flex items-center justify-between border-b border-intro-line pb-4 font-oswald text-sm uppercase tracking-[.18em]">
-      <a href="/" aria-label="Passerine home" class="inline-flex items-center gap-2">
-        <Image src={logo} alt="Passerine logo" class="h-8 w-8 object-contain" />
-        <span>Passerine</span>
-      </a>
-      <span>01 / 04</span>
+  <div class="home-entry" id="top">
+    <div class="home-smoke" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="home-grain" aria-hidden="true"></div>
+    <div class="home-page">
+      <header class="home-header">
+        <a href="/" aria-label="Passerine home" class="home-brand"><Image src={logo} alt="" width={32} height={32} />Passerine</a>
+        <span class="home-status" data-home-status aria-live="polite"></span>
+      </header>
+      <main id="main" class="home-main" aria-labelledby="intro-title">
+        <h1 id="intro-title" aria-label={`I’m ${portfolio.name} / I’m Passerine`}><span>I’m</span><span class="home-typed"><span data-home-word>{portfolio.name}</span><span class="home-caret" aria-hidden="true"></span></span></h1>
+        <p class="home-ask">Which me would you like to meet?</p>
+        <div class="home-stage">
+          <div class="home-family">
+            <span class="home-family-label">The ones I own</span>
+            <nav class="home-doors" aria-label="Choose a version of me">
+              <a class="home-door" href="/intern/" data-home-name="The Intern"><span class="home-name">The Intern</span><span class="home-hint">Where I started.</span></a>
+              <a class="home-door" href="/learner/" data-home-name="The Learner" hidden><span class="home-name">The Learner</span><span class="home-hint">What I’m still figuring out.</span></a>
+              <a class="home-door" href="/daily-me/" data-home-name="The Daily Me"><span class="home-name">The Daily Me</span><span class="home-hint">Off the clock.</span></a>
+            </nav>
+          </div>
+          <div class="home-apart">
+            <a class="home-door" href="/anxious-me/" data-home-name="Anxious Me"><span class="home-name">Anxious Me</span><span class="home-hint">The loud one at 3 a.m.</span></a>
+          </div>
+        </div>
+      </main>
+      <div class="home-note">Hover to look closer</div>
     </div>
-    <div class="mx-auto flex w-full max-w-[1500px] flex-1 flex-col justify-center py-12">
-      <h1
-        id="intro-title"
-        class="intro-title max-w-[13ch] font-oswald font-bold"
-      >
-        Hi, I’m
-        <br />
-        Passerine
-      </h1>
-      <p class="mt-8 font-oswald text-2xl font-medium sm:mt-12 sm:text-4xl">
-        Which me would you like to meet?
-      </p>
-      <nav
-        class="mt-9 grid gap-3 sm:mt-12 sm:grid-cols-2 lg:grid-cols-[1.15fr_1fr_1fr_.95fr]"
-        aria-label="Choose a profile"
-      >
-        <a
-          class="flex min-h-28 items-end border border-intro-ink bg-intro-ink p-5 font-oswald text-xl text-intro-bg transition-transform hover:-translate-y-1 sm:min-h-36 sm:text-2xl"
-          href="/intern/"
-        >
-          <span>
-            <small class="mb-3 block text-sm">01</small>The Intern
-          </span>
-        </a>
-        <a
-          class="flex min-h-28 items-end border border-intro-ink bg-intro-bg p-5 font-oswald text-xl transition-colors hover:bg-intro-ink hover:text-intro-bg sm:min-h-36 sm:text-2xl"
-          href="/learner/"
-        >
-          <span>
-            <small class="mb-3 block text-sm">02</small>The Learner
-          </span>
-        </a>
-        <a
-          class="flex min-h-28 items-end border border-intro-ink bg-intro-bg p-5 font-oswald text-xl transition-colors hover:bg-intro-ink hover:text-intro-bg sm:min-h-36 sm:text-2xl"
-          href="/daily-me/"
-        >
-          <span>
-            <small class="mb-3 block text-sm">03</small>The Daily Me
-          </span>
-        </a>
-        <a
-          class="persona-anxious mt-5 flex min-h-28 items-end border border-intro-anxious bg-intro-anxious p-5 font-oswald text-xl text-intro-on-anxious transition-transform sm:col-start-2 sm:mt-8 sm:min-h-36 sm:text-2xl lg:col-start-auto lg:ml-10 lg:mt-0"
-          href="/anxious-me/"
-        >
-          <span>
-            <small class="mb-3 block text-sm">04</small>Anxious Me
-          </span>
-        </a>
-      </nav>
-    </div>
-    <div class="border-t border-intro-line pt-4 font-oswald text-xs uppercase tracking-[.16em] text-intro-soft">
-      Choose a page to continue
-    </div>
-  </main>
+  </div>
+  <script>
+    const word = document.querySelector<HTMLElement>('[data-home-word]');
+    const status = document.querySelector<HTMLElement>('[data-home-status]');
+    const heading = word?.closest('h1');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let typingTimer: number | undefined;
+    let stopped = false;
+
+    if (word && heading && !reduceMotion.matches) {
+      const words = [word.textContent || '', 'Passerine'];
+      let current = 0;
+      let count = 0;
+      let deleting = false;
+      word.textContent = '';
+
+      const tick = () => {
+        if (stopped) return;
+        const full = words[current];
+        let delay: number;
+        heading.classList.add('is-typing');
+        if (!deleting) {
+          count++;
+          word.textContent = full.slice(0, count);
+          delay = 95 + Math.random() * 70;
+          if (count === full.length) {
+            deleting = true;
+            delay = 2000;
+            heading.classList.remove('is-typing');
+          }
+        } else {
+          count--;
+          word.textContent = full.slice(0, count);
+          delay = 45;
+          if (count === 0) {
+            deleting = false;
+            current = (current + 1) % words.length;
+            delay = 450;
+            heading.classList.remove('is-typing');
+          }
+        }
+        typingTimer = window.setTimeout(tick, delay);
+      };
+      tick();
+    }
+
+    document.querySelectorAll<HTMLAnchorElement>('.home-entry [data-home-name]').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (status) status.textContent = `Opening ${link.dataset.homeName}…`;
+      });
+    });
+
+    const stopTyping = () => {
+      stopped = true;
+      window.clearTimeout(typingTimer);
+    };
+    window.addEventListener('pagehide', stopTyping, { once: true });
+    document.addEventListener('astro:before-swap', stopTyping, { once: true });
+  </script>
 </Layout>

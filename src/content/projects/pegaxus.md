@@ -9,6 +9,9 @@ featured: true
 problem: Model how a platform could coordinate racehorse transport across Europe and the UK, from booking to billing.
 produced: Six business flows, SRS, requirements, business rules, RACI and CRUD matrices, diagrams, prototypes and UI.
 result: Produced an SRS and a Markdown repository documenting the proposed workflows.
+cardImage:
+  src: ../../assets/pegaxus-screen.png
+  alt: PEGAXUS transport platform home screen with a horse and navigation for journeys, compliance and platform tools.
 useCase:
   id: UC-18
   title: Create Trip Dossier from Template
@@ -68,7 +71,6 @@ images:
     alt: PEGAXUS context diagram showing the system's data exchanges with customers, transport staff, management, payment and email services, and external tools.
     caption: Context diagram
     kind: diagram
-titleUrl: https://drive.google.com/file/d/1qkM0BDFrOTfWraSsY3ROiWSIVMizVL7p/view?usp=sharing
 links:
   - label: Document
     url: https://drive.google.com/file/d/1qkM0BDFrOTfWraSsY3ROiWSIVMizVL7p/view?usp=sharing

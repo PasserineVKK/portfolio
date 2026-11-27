@@ -99,12 +99,6 @@
   --ink-muted: color-mix(in srgb, var(--ink) 72%, var(--bg));
   --line: color-mix(in srgb, var(--ink) 18%, var(--bg));
   --placeholder: #ffffff;
-  --intro-bg: #f8f8f8;
-  --intro-ink: #141414;
-  --intro-soft: #404040;
-  --intro-line: #a8a8a8;
-  --intro-anxious: #4c4c4c;
-  --intro-on-anxious: #ffffff;
 }
 
 @theme inline {
@@ -132,12 +126,6 @@
   --color-on-dark: var(--on-dark);
   --color-body-text: var(--body-text);
   --color-placeholder: var(--placeholder);
-  --color-intro-bg: var(--intro-bg);
-  --color-intro-ink: var(--intro-ink);
-  --color-intro-soft: var(--intro-soft);
-  --color-intro-line: var(--intro-line);
-  --color-intro-anxious: var(--intro-anxious);
-  --color-intro-on-anxious: var(--intro-on-anxious);
 }
 
 html {
@@ -163,17 +151,6 @@ summary:focus-visible {
 [hidden] {
   display: none !important;
 }
-.intro-title {
-  font-size: 25vh;
-  line-height: 0.84;
-  letter-spacing: -0.065em;
-}
-.persona-anxious {
-  transform: rotate(5deg);
-}
-.persona-anxious:hover {
-  transform: rotate(5deg) translateY(-3px);
-}
 .cv-detail p {
   margin: 0.75rem 0;
 }
@@ -183,18 +160,6 @@ summary:focus-visible {
 }
 .cv-detail li + li {
   margin-top: 0.35rem;
-}
-
-@media (max-width: 760px) {
-  .intro-title {
-    font-size: clamp(4.1rem, 20vw, 25vh);
-  }
-  .persona-anxious {
-    transform: rotate(3deg);
-  }
-  .persona-anxious:hover {
-    transform: rotate(3deg) translateY(-3px);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -255,6 +220,8 @@ body { background: var(--bg); color: var(--ink); }
 .project-card:hover { transform: translateY(-2px); border-color: var(--ink); }
 .project-image { display: grid; overflow: hidden; aspect-ratio: 16 / 10; place-items: center; background: var(--surface); }
 .project-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 250ms var(--ease-out); }
+.project-image-contained { background: var(--dark); }
+.project-image-contained img { object-fit: contain; }
 .project-card:hover .project-image img { transform: scale(1.025); }
 .project-type { display: flex; align-items: flex-end; justify-content: space-between; min-height: 9rem; padding: 1.25rem; background: var(--surface); font-family: Oswald, sans-serif; text-transform: uppercase; }
 .project-type span:first-child { font-size: clamp(5rem, 12vw, 9rem); font-weight: 600; line-height: .75; letter-spacing: -.06em; }
@@ -331,18 +298,3 @@ body { background: var(--bg); color: var(--ink); }
 .persona-bottom { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-top: clamp(2.5rem, 5vw, 5rem); border-top: 1px solid var(--ink); padding-top: 1.5rem; }
 .persona-bottom p { max-width: 28rem; font-size: 1.05rem; line-height: 1.7; }
 @media (max-width: 640px) { .persona-bottom { flex-direction: column; align-items: stretch; } .persona-main h1 { font-size: clamp(4.5rem, 19vw, 8rem); } }
-
-/* Entry page: four profiles as a quiet index */
-main[aria-labelledby='intro-title'] { min-height: 0; background: var(--intro-bg); }
-.intro-title { max-width: 11ch; font-size: clamp(5.3rem, 12vw, 13rem); font-weight: 600; line-height: .9; letter-spacing: -.055em; text-transform: uppercase; }
-main[aria-labelledby='intro-title'] > div:nth-child(2) { max-width: 84rem; flex: initial; padding-block: clamp(2rem, 4vw, 4rem); }
-main[aria-labelledby='intro-title'] > div:nth-child(2) > p { margin-top: clamp(1.25rem, 2vw, 2rem); font-family: 'Open Sans', sans-serif; font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 400; }
-nav[aria-label='Choose a profile'] { margin-top: 1.5rem; gap: 0; border-top: 1px solid var(--intro-ink); }
-nav[aria-label='Choose a profile'] a { position: relative; min-height: 9rem; margin: 0; border: 0; border-right: 1px solid var(--intro-line); border-bottom: 1px solid var(--intro-ink); background: transparent; color: var(--intro-ink); padding: 1.2rem; font-size: clamp(1.5rem, 2vw, 2.2rem); transform: none; transition: background-color 180ms ease, color 180ms ease; }
-nav[aria-label='Choose a profile'] a:first-child { background: var(--intro-ink); color: var(--intro-bg); }
-nav[aria-label='Choose a profile'] a:last-child { border-right: 0; }
-nav[aria-label='Choose a profile'] a:hover { background: var(--intro-ink); color: var(--intro-bg); transform: none; }
-nav[aria-label='Choose a profile'] a:active { transform: scale(.98); }
-nav[aria-label='Choose a profile'] small { font-family: 'Open Sans', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .12em; }
-@media (max-width: 1023px) { nav[aria-label='Choose a profile'] a:nth-child(2) { border-right: 0; } nav[aria-label='Choose a profile'] a:last-child { border-right: 0; } }
-@media (max-width: 639px) { .intro-title { font-size: clamp(4.2rem, 18vw, 7rem); } nav[aria-label='Choose a profile'] a { min-height: 7rem; } nav[aria-label='Choose a profile'] a:nth-child(odd) { border-right: 1px solid var(--intro-line); } }

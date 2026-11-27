@@ -1,0 +1,47 @@
+.daily-me { color: var(--ink); }
+.daily-hero { min-height: calc(100svh - 4.5rem); background: var(--surface); }
+.daily-hero-inner { display: flex; min-height: calc(100svh - 4.5rem); flex-direction: column; padding-block: clamp(1.5rem, 3vw, 2.5rem); }
+.daily-eyebrow, .daily-section-number { margin: 0; font-size: .76rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.daily-eyebrow span { margin-inline: .55em; }
+.daily-hero-grid { display: grid; flex: 1; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: clamp(2rem, 6vw, 7rem); padding-block: 2rem; }
+.daily-hero-copy h1, .daily-answer h2 { font-family: Oswald, Impact, sans-serif; font-weight: 600; text-transform: uppercase; }
+.daily-hero-copy h1 { margin: 0; font-size: clamp(5rem, 10vw, 11rem); line-height: .86; letter-spacing: -.065em; }
+.daily-hero-copy h1 span { color: var(--primary); }
+.daily-hero-copy > p { max-width: 28rem; margin: clamp(1.5rem, 3vw, 2.75rem) 0 0; font-size: clamp(1.1rem, 1.5vw, 1.4rem); line-height: 1.5; }
+.daily-bird { width: min(100%, 31rem); justify-self: end; }
+.daily-bird img { display: block; width: 100%; height: auto; border-radius: 50%; }
+.daily-questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.daily-questions a { display: grid; min-height: 5.5rem; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(1rem, 2vw, 2rem); border-bottom: 1px solid var(--ink); padding: 1rem .75rem 1rem 0; transition: padding-left 180ms var(--ease-out), color 180ms ease; }
+.daily-questions a + a { border-left: 1px solid var(--ink); padding-left: clamp(1rem, 3vw, 3rem); }
+.daily-questions a:hover { padding-left: .5rem; color: var(--link-hover); }
+.daily-questions a + a:hover { padding-left: clamp(1.5rem, 3.5vw, 3.5rem); }
+.daily-questions a span { font-size: .75rem; font-weight: 700; }
+.daily-questions a strong { font-size: clamp(.95rem, 1.4vw, 1.15rem); font-weight: 700; }
+.daily-answer { scroll-margin-top: 4.5rem; padding-block: clamp(5rem, 10vw, 10rem); }
+.daily-name { background: var(--bg); }
+.daily-mascot { background: var(--surface); }
+.daily-answer-grid { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(3rem, 9vw, 10rem); }
+.daily-answer-heading h2 { max-width: 11ch; margin: 1.5rem 0 0; font-size: clamp(3.75rem, 7vw, 7.5rem); line-height: .95; letter-spacing: -.055em; }
+.daily-answer-content { padding-top: .2rem; }
+.daily-answer-content p { max-width: 39rem; margin: 0; font-size: clamp(1rem, 1.3vw, 1.13rem); line-height: 1.8; }
+.daily-answer-content p + p { margin-top: 1.5rem; }
+.daily-answer-content .daily-lead { font-size: clamp(1.25rem, 2vw, 1.8rem); font-weight: 600; line-height: 1.5; }
+.daily-inline-link { color: var(--link-text); text-decoration: underline; text-underline-offset: 0.16em; transition: color 180ms ease; }
+.daily-inline-link:hover { color: var(--link-hover); }
+@media (prefers-reduced-motion: no-preference) {
+  .daily-hero [data-enter] { animation: daily-enter 700ms var(--ease-out) both; }
+  .daily-hero .daily-hero-copy { animation-delay: 80ms; }
+  .daily-hero .daily-bird { animation-delay: 160ms; }
+}
+@keyframes daily-enter { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 700px) {
+  .daily-hero-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-block: 2.5rem; }
+  .daily-hero-copy h1 { font-size: clamp(4.5rem, 18vw, 7rem); }
+  .daily-bird { width: min(62vw, 16rem); justify-self: center; }
+  .daily-questions { grid-template-columns: 1fr; }
+  .daily-questions a { min-height: 4.5rem; }
+  .daily-questions a + a { border-left: 0; padding-left: 0; }
+  .daily-questions a + a:hover { padding-left: .5rem; }
+  .daily-answer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .daily-answer-heading h2 { margin-top: 1rem; }
+}

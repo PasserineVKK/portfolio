@@ -54,7 +54,6 @@ const visualAssets = {
             <p class="case-kicker">{entry.data.role} <span aria-hidden="true">/</span> {entry.data.year}</p>
             <h1 id="case-title">{entry.data.title}</h1>
             <p class="case-dek">{entry.data.subtitle}</p>
-            {!isEduconnect && entry.data.titleUrl && <div class="case-actions"><a class="case-action-text" href={entry.data.titleUrl} target="_blank" rel="noreferrer">Read project document <span aria-hidden="true">↗</span></a></div>}
           </div>
           {isEduconnect && entry.data.heroSummary && <div class="case-hero-summary">
             <p class="case-hero-summary-label">Project summary</p>
